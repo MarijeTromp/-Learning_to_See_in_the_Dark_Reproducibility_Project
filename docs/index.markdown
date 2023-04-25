@@ -153,7 +153,7 @@ So, in this ablation study we have shown that while all layers of the network ar
 
 ## Authors <a name="authors"></a>
 #### Group 5
-Remco Huijsen (5650844) e-mail: New data, Hyperparams check<br>
+Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams check<br>
 Floor Joosen (4814495) e-mail: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
