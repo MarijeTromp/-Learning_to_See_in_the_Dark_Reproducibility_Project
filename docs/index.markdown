@@ -40,6 +40,21 @@ To keep the experiments fair we used the same train and test set for all experim
 
 ## Hyperparams check <a name="hyperparams-check"></a>
 
+### Learning rate
+For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the feect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
+
+|		Learning rate value		| PSNR  | SSIM  |
+|-------------------------------|-------|-------|
+| Default						| 30.10 | 0.80  |
+| 1e-3							| 28.22 | 0.006 |
+| 1e-4							| 30.09 | 0.80  |
+| 1e-5							| 29.85 | 0.76  |
+| 1e-6							| 28.99 | 0.70  |
+| 1e-7							| 28.23 | 0.32  |
+| 1e-3&1e-4 (after 100  epochs) | 29.02 | 0.60  |
+| 1e-3&1e-4 (after 500  epochs) | 28.20 | 0.004 |
+| 1e-3&1e-4 (after 1000 epochs) | 28.21 | 0.007 |
+| 1e-3&1e-4&1e-5&1e-6			| 28.20 | 0.007 |
 
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
