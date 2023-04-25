@@ -41,7 +41,7 @@ To keep the experiments fair we used the same train and test set for all experim
 ## Hyperparams check <a name="hyperparams-check"></a>
 
 ### Learning rate
-For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the feect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
+For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
 
 |		Learning rate value		| PSNR  | SSIM  |
 |-------------------------------|-------|-------|
@@ -58,7 +58,17 @@ For the learning rate, we wanted to find out why the specific values were chosen
 
 These different learning rate (combinations) will visually be evaluated towards the following baseline:
 
-![](./images/bike_gt&default.png)
+![](./images/lr_bike_gt&default.png)
+
+#### Increasing the learning rate
+Increasing the learning rate would intuitively result in faster learning, with the added risk that the “steps” taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resamblance of a bike can be detected, but this is not a desirable result.
+
+![](./images/lr_bike_1e-3.png)
+
+#### Decreasing the learning rate
+Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the “steps” taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7. These images show that decreasing the learning rate directly impacts the amount of time necesarry to get visible images, with the images getting more blurry and more dark for a decreasing lerning rate.
+
+![](./images/lr_bike_1e-4&1e-5&1e-6&1e-7.png)
 
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
