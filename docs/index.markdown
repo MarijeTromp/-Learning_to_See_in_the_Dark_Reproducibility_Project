@@ -71,7 +71,7 @@ To test how well the network generalised, we planned on training a model for eac
 
 When making the datasets we ran into several challenges. These challenges are first explained before finally considering the results.
 
-### Making of Dataset C1 <a name="making-of-dataset-c1"><\a>
+### Making of Dataset C1 <a name="making-of-dataset-c1"></a>
 The Canon 90d has a 32,5 Megapixel APS-C CMOS-sensor sensor that can shoot CR3 14-bit RAW images and has a Bayer filter ("Canon EOS 90D-camera", n.d.). Since the Sony images created by the authors of the paper also has a Bayer filter, we can use the same training file for these images. We used a tripod to keep the camera steady while taking the different images. However, since we did still have to touch the camera to change the settings and take the images it was impossible to prevent the camera from slightly shifting between different shots. 
 
 To create the images we took bright images and dark images to function as the long and short images in the data sets. In the paper they show that both their ISO and exposure time varies between the long and short images. So, to create the Canon 90d data set we played around with the ISO and exposure time for each photo, trying to get images that looked to be of similar light levels as the original data set. However, what we did not pay sufficient attention to was the fact that they mention that the exposure of the long photo is 100-300 times larger than for the short photo. For the photos in this data set the ratio between the exposure is significantly smaller for most pairs of photos, with for quite a few photos this ratio being below 10. This turned out to be a problem.
@@ -93,13 +93,13 @@ While the output is far from perfect, it is significantly better than when we us
 
 During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
-### Making of Dataset C2 <a name="making-of-dataset-c2"><\a>
+### Making of Dataset C2 <a name="making-of-dataset-c2"></a>
 TODO: WRITE ABOUT CANON EOS 100D
 
-### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
+### Making of Dataset P1 <a name="making-of-dataset-p1"></a>
 TODO WRITE ABOUT ONEPLUS NORD 2
 
-### Making of Dataset P2 <a name="making-of-dataset-p2"><\a>
+### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 
 ![](./images/OnePlus7_1.png)
@@ -112,7 +112,7 @@ To make sure the problem did not have anything to do with the bit depth, we also
 
 For these images the exposure ratio again is mostly not between 100 and 300. Therefore it is likely that the ratio is again the problem. 
 
-### Making of Dataset P3 <a name="making-of-dataset-p3"><\a>
+### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
 TODO: WRITE ABOUT REMCO'S PHONE
 
 ### Results of Experiments
