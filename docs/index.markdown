@@ -119,6 +119,36 @@ Solely out of curiosity, we dicided to see what would happen with four learning 
 
 From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only margianally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
 
+### Patch size
+For the learning rate, we wanted to find out why the specific patch size was chosen. In the default version, a patch size of 512x512 is chosen to train on. To inspect the effect of the size, we try different patch sizer or different combinations there of. The following patch sizes are used, with the corresponding PSNR and SSIM scores:
+
+|					Patch size value					| PSNR  | SSIM  |
+|-------------------------------------------------------|-------|-------|
+| Default (512)											| 30.10 | 0.80  |
+| 1														| 28.35 | 0.25  |
+| 64													| 29.66 | 0.77  |
+| 128													| 29.85 | 0.78  |
+| 256													| 30.01 | 0.79  |
+| 650													| 30.17 | 0.80  |
+| Random from [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]	| 29.82 | 0.76  |
+| Random from [8, 16, 32, 64]							| 28.87 | 0.74  |
+| Random from [16, 32, 64, 128, 256, 512]				| 28.90 | 0.77  |
+| Random from [64, 128, 256, 512]						| 30.10 | 0.79  |
+
+These different learning rate (combinations) will visually be evaluated towards the following baseline:
+
+![](./images/ps_gt&default.png)
+
+#### Minimizing or increasing patch size
+Altering the training patch size seems to effect the coloration of the images the most. In the extreme case of a patch size of 1, very little actual color seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximatly 10 times faster then iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
+
+![](./images/ps_singles.png)
+
+#### Randomly selecting patch sizes
+Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are maginally better then most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations with a smaller patch size might be significantly faster.  
+
+![](./images/ps_randoms.png)
+
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
 
