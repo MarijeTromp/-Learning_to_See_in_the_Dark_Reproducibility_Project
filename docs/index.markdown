@@ -78,11 +78,11 @@ For these images the exposure ratio again is mostly not between 100 and 300. The
 ## Hyperparams check <a name="hyperparams-check"></a>
 
 ### Learning rate
-For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the feect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
+For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
 
 |		Learning rate value		| PSNR  | SSIM  |
 |-------------------------------|-------|-------|
-| Default						| 30.10 | 0.80  |
+| Default (1e-4&1e-5)			| 30.10 | 0.80  |
 | 1e-3							| 28.22 | 0.006 |
 | 1e-4							| 30.09 | 0.80  |
 | 1e-5							| 29.85 | 0.76  |
@@ -95,7 +95,29 @@ For the learning rate, we wanted to find out why the specific values were chosen
 
 These different learning rate (combinations) will visually be evaluated towards the following baseline:
 
-![](./images/bike_gt&default.png)
+![](./images/lr_bike_gt&default.png)
+
+#### Increasing the learning rate
+Increasing the learning rate would intuitively result in faster learning, with the added risk that the steps taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resamblance of a bike can be detected, but this is not a desirable result.
+
+![](./images/lr_bike_1e-3.png)
+
+#### Decreasing the learning rate
+Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the steps taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7. These images show that decreasing the learning rate directly impacts the amount of time necesarry to get visible images, with the images getting more blurry and more dark for a decreasing lerning rate.
+
+![](./images/lr_bike_1e-4&1e-5&1e-6&1e-7.png)
+
+#### Combination of 1e-3 and 1e-4
+Combining the highest learning rate with the best single learning rate, we wanted to experiment if it is possible for the algorithm to go from the psychadelic images from the higher learning rate to something that more resambles the ground truth. We started out with the higher learning rate for both 1000 epochs, 500 epochs and 100 epoch. For the former two, it was not succesful into getting the loss below 1, and the images remained very colorfull. For the 100 epochs variant, however, the results are actually very muted. This shows 2 interesting things however: 1) An overly colorfull and satuarated image can eventually be transformed to something more conform the ground truth, and 2) there are artefacts present from this more colorfull past. Notice that for example the yellow bike has a certain glow that none of the presented images thus far have.
+
+![](./images/lr_bike_1e-3&1e-4.png)
+
+#### Combination of 1e-3, 1e-4, 1e-5 and 1e-6
+Solely out of curiosity, we dicided to see what would happen with four learning rates: the one that is too radical, and the three learning rates which are all reasonable. This gave the following result. This harkens back tot he combination of 1e-3 and 1e-4, but with more detail, be it also psychadelicly styled.
+
+![](./images/lr_quad_combi.png)
+
+From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only margianally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
 
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
@@ -170,7 +192,7 @@ Note: If you are doing an ablation study, make sure that the network in the test
 
 ## Authors <a name="authors"></a>
 #### Group 5
-Remco Huijsen (5650844) e-mail: New data, Hyperparams check<br>
+Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams check<br>
 Floor Joosen (4814495) e-mail: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
