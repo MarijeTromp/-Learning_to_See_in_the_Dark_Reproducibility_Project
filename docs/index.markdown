@@ -56,6 +56,10 @@ For the learning rate, we wanted to find out why the specific values were chosen
 | 1e-3&1e-4 (after 1000 epochs) | 28.21 | 0.007 |
 | 1e-3&1e-4&1e-5&1e-6			| 28.20 | 0.007 |
 
+These different learning rate (combinations) will visually be evaluated towards the following baseline:
+
+![](./images/bike_gt&default.png)
+
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
 
