@@ -34,12 +34,44 @@ This is a paper
 ## Method <a name="method"></a>
 The original data set from the authors of the paper is too large to use for the many different experiments we wanted to run during our limited timeframe. Therefore we picked a subset of 10 train images and 10 test images. Half of the train and test set are images taken inside and half of the train and test set are images taken outside. 
 
-To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new data sets which also consist of 10 train images and 10 test images. For each new data set half of the images was taken inside and half of the images was taken outside. 
+To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new data sets which also consist of 10 train images and 10 test images. For each new data set half of the images was taken inside and half of the images was taken outside. Each data set was created using a different camera sensor (device). The model trained on the subset of the paper was still also tested on all 5 of the new data sets.
 
 ## New data <a name="new-data"></a>
-For the new data section of this project we created 5 new data sets with 5 different devices. Each data set exists of 10 train images and 10 test images. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. 
+For this part of our experiments, the goal was to discover how well the network generalizes to different camera sensors once it has been trained. In order to do so, 5 new datasets were created with the following devices:
+- OnePlus Nord 2 (phone)
+- OnePlus 7 (phone)
+- TODO: REMCO'S PHONE (phone)
+- Canon 90D (camera)
+- Canon EOS 100D (camera)
 
-### Canon 90d (camera)
+Here we made the distinction of camera's on phones, or dedicated camera's. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
+
+TODO: INSERT TABLE!!
+
+Each datasets consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
+- S: SID-subset
+- C1: [Canon 90D](#making-of-dataset-c1)
+- C2: [Canon EOS 100D](#making-of-dataset-c2)
+- P1: [OnePlus Nord 2](#making-of-dataset-p1)
+- P2: [OnePlus 7](#making-of-dataset-p2)
+- P3: [REMCO'S PHONE](#making-of-dataset-p3)
+
+In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
+
+To test how well the network generalised, we planned on training a model for each type of dataset, and then testing these models also each on one type of dataset:
+- (S, S): train model on dataset S, test on dataset S.
+- (S, P1): train model on dataset S, test on dataset P1.
+- (S, C1): train model on dataset S, test on dataset C1.
+- (C1, S): train model on dataset C1, test on dataset S.
+- (C1, P1): train model on dataset C1, test on dataset P1.
+- (C1, C1): train model on dataset C1, test on dataset C1.
+- (P1, S): train model on dataset P1, test on dataset S.
+- (P1, P1): train model on dataset P1, test on dataset P1.
+- (P1, C1): train model on dataset P1, test on dataset C1.
+
+When making the datasets we ran into several challenges. These challenges are first explained before finally considering the results.
+
+### Making of Dataset C1 <a name="making-of-dataset-c1"><\a>
 The Canon 90d has a 32,5 Megapixel APS-C CMOS-sensor sensor that can shoot CR3 14-bit RAW images and has a Bayer filter ("Canon EOS 90D-camera", n.d.). Since the Sony images created by the authors of the paper also has a Bayer filter, we can use the same training file for these images. We used a tripod to keep the camera steady while taking the different images. However, since we did still have to touch the camera to change the settings and take the images it was impossible to prevent the camera from slightly shifting between different shots. 
 
 To create the images we took bright images and dark images to function as the long and short images in the data sets. In the paper they show that both their ISO and exposure time varies between the long and short images. So, to create the Canon 90d data set we played around with the ISO and exposure time for each photo, trying to get images that looked to be of similar light levels as the original data set. However, what we did not pay sufficient attention to was the fact that they mention that the exposure of the long photo is 100-300 times larger than for the short photo. For the photos in this data set the ratio between the exposure is significantly smaller for most pairs of photos, with for quite a few photos this ratio being below 10. This turned out to be a problem.
@@ -59,10 +91,15 @@ The results of these three training sessions point to the fact that the ratio be
 
 While the output is far from perfect, it is significantly better than when we use the actual ratio. The average PSNR/SSIM for the output of this model is 29.20/0.48.
 
-
 During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
-### OnePlus 7 (phone)
+### Making of Dataset C2 <a name="making-of-dataset-c2"><\a>
+TODO: WRITE ABOUT CANON EOS 100D
+
+### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
+TODO WRITE ABOUT ONEPLUS NORD 2
+
+### Making of Dataset P2 <a name="making-of-dataset-p2"><\a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 
 ![](./images/OnePlus7_1.png)
@@ -75,7 +112,44 @@ To make sure the problem did not have anything to do with the bit depth, we also
 
 For these images the exposure ratio again is mostly not between 100 and 300. Therefore it is likely that the ratio is again the problem. 
 
+### Making of Dataset P3 <a name="making-of-dataset-p3"><\a>
+TODO: WRITE ABOUT REMCO'S PHONE
+
+### Results of Experiments
+The results of the experiments can be viewed in the following table:
+
+TODO: INSERT TABLE!!
+
+
+
+
+
 ## Hyperparams check <a name="hyperparams-check"></a>
+
+### Amplification
+TODO: WRITE ABOUT AMPLIFICATION
+
+|   Ratio   |	PSNR    |	SSIM    |
+|-----------|-----------|-----------|
+|   Default |	30.43	|   0.83    |
+|   1   	|   28.75   |	0.73    |
+|   100     |	29.43	|   0.75    |
+|   250     |	29.32   |	0.74    |
+|   300     |	28.75   |	0.72    |
+|   600     |	29.58   |	0.76    |
+|   no max  |	29.97	|   0.79    |
+|   random  |	29.05   |	0.72    |
+
+### Epochs
+TODO: WRITE ABOUT EPOCHS
+
+|   Epochs  |	PSNR    |	SSIM    |
+|-----------|-----------|-----------|
+|   10      |	28.25	|   0.65    |
+|   500     |	29.42   |	0.74    |
+|   4000    |	30.43   |	0.83    |
+|   8000    |	30.16   |	0.81    |
+
 
 ### Learning rate
 For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
