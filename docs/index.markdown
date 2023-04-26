@@ -20,7 +20,13 @@ layout: page
 
 
 ## Introduction <a name="introduction"></a>
-In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology.
+In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology. This paper entailed two major contributions: the See-in-the-Dark (SID) dataset and a pipeline to undarken image with very little to no light present.
+
+The SID dataset consists of images from two cameras: the Sony alpha-7S II and the Fujifilm X-T2. These images come in sets. The ground truth image is an image with a high exposure time, which brightens the image in a non-artificial way. This image is paired with one or multiple short exposure time images, which the network will try and learn how to transform to the ground truth images. All these images are provided in the raw format, so as raw sensor data compared to a compressed PNG or JPEG. With this format, you lose a minimal amount of information.
+
+The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images.
+
+In this blog post, we want to deepen our understanding of the pipeline. To achieve this, we will perform hyperparameter checks and an ablation study. This way, we want to uncover why the network is the way it is, and how robust this network actually is. To deepen our understanding of the data collection and image pipeline, we will be collecting data ourselves. This will be done with both mobile phones and camera’s, to see how generalizable this solution actually is.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is important. If a paper has never been reproduced it is not possible to know if the findings are correct or not. It is possible that the original authors have made a mistake, or that they cherry picked certain results. By trying to reproduce the results of a paper we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable a method is. If it is possible to reproduce a result but very difficult, it can be that while the findings of a paper are still important, they are not very applicable in the real world.
