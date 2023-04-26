@@ -27,7 +27,7 @@ This paper entailed two major contributions: the See-in-the-Dark (SID) dataset a
 
 The SID dataset consists of images from two cameras: the Sony alpha-7S II and the Fujifilm X-T2. These images come in sets. The ground truth image is an image with a high exposure time, which brightens the image in a non-artificial way. This image is paired with one or multiple short exposure time images, which the network will try and learn how to transform to the ground truth images. All these images are provided in the raw format, so as raw sensor data compared to a compressed PNG or JPEG. With this format, you lose a minimal amount of information.
 
-The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images. They measure the quality of the undarkening by two scores: the Structural Simularity (SSIM) and the Peak Signal-to-Noise Ratio (PSNR). The scores for both images are as follows:
+The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images. They measure the quality of the undarkening by two scores: the Structural Similarity (SSIM) and the Peak Signal-to-Noise Ratio (PSNR). The scores for both images are as follows:
 
 |		Device		 |	PSNR     |	SSIM     |
 |--------------------|-----------|-----------|
@@ -38,23 +38,23 @@ In this blog post, we want to deepen our understanding of the pipeline. To achie
 
 
 ## Main project goals <a name="goals"></a>
-There are a few main goals we have for this reproduction project. For the new data section our main goals are to check if the method is able to generalize to different sensors and to see if models that are trained on images from one sensor can generalize to images from a different sensor.
+There are a few main goals we have for this reproduction project. For the new data section our main goals are to check if the method is able to generalise to different sensors and to see if models that are trained on images from one sensor can generalise to images from a different sensor.
 For the hyperparameter section the main goals are to check how well tuned the hyperparameters are and how sensitive the network is. For the ablation study our main goal is to check if this specific network is the best network possible for this problem.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is certainly important. If a paper has never been reproduced, it is not possible to know if the findings are actually valid or not. It is possible that the original authors made some mistake, or that they used more favorable results. By reproducing the results of a paper, we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable or usable a method is. If it is very difficult to reproduce a result, it may be that while the findings of a paper are still important or valid, but they may not be very applicable in the real world. Another example could be that the network presented is larger than need be, or other optimizations can be applied to improve the performance. Not to mention that future works can be built on a paper only if the orginal results can be recreated.
 
 ## Method <a name="method"></a>
-The original data set from the authors of the paper is too large to use for the many different experiments we wanted to run during our limited timeframe. Therefore we picked a subset of 10 train images and 10 test images. Half of the train and test set are images taken inside and half of the train and test set are images taken outside. 
+The original dataset from the authors of the paper is too large to use for the many different experiments we wanted to run during our limited timeframe. Therefore we picked a subset of 10 train images and 10 test images. Half of the train and test set are images taken inside and half of the train and test set are images taken outside. 
 
-To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new data sets which also consist of 10 long train images and 10 long test images, and their respective short image. For each new data set half of the images was taken inside and half of the images was taken outside. Each data set was created using a different camera sensor (device). 
+To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new datasets which also consist of 10 long train images and 10 long test images, and their respective short image. For each new dataset half of the images was taken inside and half of the images was taken outside. Each dataset was created using a different camera sensor (device). 
 
 When training and testing special attention had to be paid to the bit depth of the images of each device. The data has to be adjusted for differing bit depths, otherwise the results will come out wildly different. This is an example of an image with bit depth 14, while the code specified a bit depth of 10:
 
 ![](./images/bit_depth_14_on_10.png)
 
 ## New data <a name="new-data"></a>
-For this part of our experiments, the goal was to discover how well the network generalizes to different camera sensors once it has been trained. In order to do so, 5 new datasets were created with the following devices:
+For this part of our experiments, the goal was to discover how well the network generalises to different camera sensors once it has been trained. In order to do so, 5 new datasets were created with the following devices:
 - OnePlus Nord 2 (phone)
 - OnePlus 7 (phone)
 - Samsung Galaxy S22 (phone)
@@ -71,7 +71,7 @@ Here we made the distinction of camera's on phones, or dedicated camera's. This 
 | Canon 90D				| Canon        | 14        | Quad          | 6984 x 4660 |
 | Canon EOS 100D		| Canon        | 14        | Quad          | 5208 x 3476 |
 
-Each datasets consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
+Each dataset consists of long and corresponding short images, totaling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
 - S: SID-subset
 - C1: [Canon 90D](#making-of-dataset-c1)
 - C2: [Canon EOS 100D](#making-of-dataset-c2)
@@ -99,7 +99,7 @@ When making the datasets we ran into several challenges. These challenges are fi
 ### Making of Dataset C1 <a name="making-of-dataset-c1"></a>
 The Canon 90d has a 32,5 Megapixel APS-C CMOS-sensor sensor that can shoot CR3 14-bit RAW images and has a Bayer filter ("Canon EOS 90D-camera", n.d.). Since the Sony images created by the authors of the paper also has a Bayer filter, we can use the same training file for these images. We used a tripod to keep the camera steady while taking the different images. However, since we did still have to touch the camera to change the settings and take the images it was impossible to prevent the camera from slightly shifting between different shots. 
 
-To create the images we took bright images and dark images to function as the long and short images in the data sets. In the paper they show that both their ISO and exposure time varies between the long and short images. So, to create the Canon 90d data set we played around with the ISO and exposure time for each photo, trying to get images that looked to be of similar light levels as the original data set. However, what we did not pay sufficient attention to was the fact that they mention that the exposure of the long photo is 100-300 times larger than for the short photo. For the photos in this data set the ratio between the exposure is significantly smaller for most pairs of photos, with for quite a few photos this ratio being below 10. This turned out to be a problem.
+To create the images we took bright images and dark images to function as the long and short images in the datasets. In the paper they show that both their ISO and exposure time varies between the long and short images. So, to create the Canon 90d dataset we played around with the ISO and exposure time for each photo, trying to get images that looked to be of similar light levels as the original dataset. However, what we did not pay sufficient attention to was the fact that they mention that the exposure of the long photo is 100-300 times larger than for the short photo. For the photos in this dataset the ratio between the exposure is significantly smaller for most pairs of photos, with for quite a few photos this ratio being below 10. This turned out to be a problem.
 ![](./images/Canon90d_1_small.png)
 The image above shows how the output images looked after training the model for the first time.
 As we will see later some of these results are quite similar to results for the differing amplification rates. This pointed to the fact that there was something wrong with the ratio of the exposure between the long image and the short image, which was indeed the case. For these images the exposure time in the image names was not correct. The train and test code uses the exposure time from the image name, so therefore it is important for these to be correct. Note: for this trained model the ratios were between 100 and 300 for each long and short image pair. 
@@ -116,7 +116,7 @@ The results of these three training sessions point to the fact that the ratio be
 
 While the output is far from perfect, it is significantly better than when we use the actual ratio. The average PSNR/SSIM for the output of this model is 29.20/0.48.
 
-During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
+During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new dataset show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good dataset. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
 ### Making of Dataset C2 <a name="making-of-dataset-c2"></a>
 For the making of the dataset C2, the Canon EOS 100D was used. This camera has a 18 MP CMOS sensor that can shoot 14 bit-depth images in CR2 format. This is a Canon version of the RAW format. The sensor has a quad bayer filter and a max ISO of 12800.
@@ -219,7 +219,7 @@ One hypothesis for the red colouring is that it overtrained on one image of the 
 
 One thing that obviously was clear is that the amplification was a very important hyperparameter for training the network.
   
-Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occured in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
+Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occurred in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
   
    ![amp_hardcoded_results](./images/amp_hardcoded_results.png)
 
@@ -258,7 +258,7 @@ What can be seen in the results is that at epoch 10 you can already clearly make
 |   8000    |	30.16   |	0.81    |
 
 ### Learning rate
-For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
+For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, whereas the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
 
 |		Learning rate value		| PSNR  | SSIM  |
 |-------------------------------|-------|-------|
@@ -278,26 +278,26 @@ These different learning rate (combinations) will visually be evaluated towards 
 ![](./images/lr_bike_gt&default.png)
 
 #### Increasing the learning rate
-Increasing the learning rate would intuitively result in faster learning, with the added risk that the steps taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resamblance of a bike can be detected, but this is not a desirable result.
+Increasing the learning rate would intuitively result in faster learning, with the added risk that the steps taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resemblance of a bike can be detected, but this is not a desirable result.
 
 ![](./images/lr_bike_1e-3.png)
 
 #### Decreasing the learning rate
-Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the steps taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7. These images show that decreasing the learning rate directly impacts the amount of time necesarry to get visible images, with the images getting more blurry and more dark for a decreasing lerning rate.
+Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the steps taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7. These images show that decreasing the learning rate directly impacts the amount of time necessary to get visible images, with the images getting more blurry and more dark for a decreasing learning rate.
 
 ![](./images/lr_bike_1e-4&1e-5&1e-6&1e-7.png)
 
 #### Combination of 1e-3 and 1e-4
-Combining the highest learning rate with the best single learning rate, we wanted to experiment if it is possible for the algorithm to go from the psychadelic images from the higher learning rate to something that more resambles the ground truth. We started out with the higher learning rate for both 1000 epochs, 500 epochs and 100 epoch. For the former two, it was not succesful into getting the loss below 1, and the images remained very colorfull. For the 100 epochs variant, however, the results are actually very muted. This shows 2 interesting things however: 1) An overly colorfull and satuarated image can eventually be transformed to something more conform the ground truth, and 2) there are artefacts present from this more colorfull past. Notice that for example the yellow bike has a certain glow that none of the presented images thus far have.
+Combining the highest learning rate with the best single learning rate, we wanted to experiment if it is possible for the algorithm to go from the psychedelic images from the higher learning rate to something that more resembles the ground truth. We started out with the higher learning rate for both 1000 epochs, 500 epochs and 100 epoch. For the former two, it was not successful into getting the loss below 1, and the images remained very colourful. For the 100 epochs variant, however, the results are actually very muted. This shows 2 interesting things however: 1) An overly colourful and saturated image can eventually be transformed to something more conform the ground truth, and 2) there are artifacts present from this more colourful past. Notice that for example the yellow bike has a certain glow that none of the presented images thus far have.
 
 ![](./images/lr_bike_1e-3&1e-4.png)
 
 #### Combination of 1e-3, 1e-4, 1e-5 and 1e-6
-Solely out of curiosity, we dicided to see what would happen with four learning rates: the one that is too radical, and the three learning rates which are all reasonable. This gave the following result. This harkens back tot he combination of 1e-3 and 1e-4, but with more detail, be it also psychadelicly styled.
+Solely out of curiosity, we decided to see what would happen with four learning rates: the one that is too radical, and the three learning rates which are all reasonable. This gave the following result. This hearkens back tot the combination of 1e-3 and 1e-4, but with more detail, be it also psychedelically styled.
 
 ![](./images/lr_quad_combi.png)
 
-From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only margianally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
+From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only marginally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
 
 ### Patch size
 For the learning rate, we wanted to find out why the specific patch size was chosen. In the default version, a patch size of 512x512 is chosen to train on. To inspect the effect of the size, we try different patch sizer or different combinations there of. The following patch sizes are used, with the corresponding PSNR and SSIM scores:
@@ -320,17 +320,17 @@ These different learning rate (combinations) will visually be evaluated towards 
 ![](./images/ps_gt&default.png)
 
 #### Minimizing or increasing patch size
-Altering the training patch size seems to effect the coloration of the images the most. In the extreme case of a patch size of 1, very little actual color seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximatly 10 times faster then iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
+Altering the training patch size seems to effect the coloration of the images the most. In the extreme case of a patch size of 1, very little actual color seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximately 10 times faster than iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
 
 ![](./images/ps_singles.png)
 
 #### Randomly selecting patch sizes
-Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are maginally better then most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations with a smaller patch size might be significantly faster.  
+Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are marginally better than most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations with a smaller patch size might be significantly faster.  
 
 ![](./images/ps_randoms.png)
 
 ## Ablation study <a name="ablation-study"></a>
-During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
+During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original dataset that we talked about in the Method section.
 
 ![](./images/OriginalNetwork.png)
 The original network is shown above. As we can see in the image, the network mostly consists of pairs of convolutional layers. These are the layers we targeted in our ablation study. 
@@ -398,14 +398,14 @@ So, in this ablation study we have shown that while all layers of the network ar
 Note: If you are doing an ablation study, make sure that the network in the test file is the same as the one from the train file. Otherwise the model will only give a black image as output. 
 
 ## Discussion
-One discussion point we wanted to address outside of the experiments we ran is the metrics used to determine image quality. SSIM is a measure of structural similarity on the grayscale of the images. This means that PSNR is the only value judging the colours of the images. However, it seems like a bad metric. The PSNR mentioned in the paper for their default run on Sony is 28.88. We found across all of our experiments that the PSNR of seemingly terrible results was comparable or even better than the PSNR mentioned as the default in the paper. An example is the amplificaton being hardcoded to 1 experiment. Here the PSNR was comparable to the value in the paper.
+One discussion point we wanted to address outside of the experiments we ran is the metrics used to determine image quality. SSIM is a measure of structural similarity on the grayscale of the images. This means that PSNR is the only value judging the colours of the images. However, it seems like a bad metric. The PSNR mentioned in the paper for their default run on Sony is 28.88. We found across all of our experiments that the PSNR of seemingly terrible results was comparable or even better than the PSNR mentioned as the default in the paper. An example is the amplification being hardcoded to 1 experiment. Here the PSNR was comparable to the value in the paper.
 
 This could, for example, be due to the fact that they have more images in their test and train set and that this would make the overall average lower. However, if the average of output images was equal to the image above we would argue that is not a very good result. Another reasoning is that the average is overall sensitive to outliers, and maybe there were just some outliers in their output. On one hand this would have then been interesting to know about, but on the other hand then possibly using the mean of the PSNR and SSIM would have been a better measure to combat this issue. Finally, the PSNR could just also be a bad metric to determine image quality. Since it is then the only judge of the colour quality of an image, a different metric should have been chosen. 
 
 Whatever caused this oddity, it cannot be determined since it was not shared how the SSIM and PSNR were determined. This might stand to reason since these are standardised values. However, it would have been educative to be able to determine why this difference seems to be there.
 
 ## Conclusions and Final remarks <a name="conclusions-and-final-remarks"></a>
-When creating new datasets to use on the network, the environment for creating datasets needs to be strictly defined. It needs to be paid special attention to that the camera does not move in between taking a long and short image of the scene, the ratio of the exposure time needs to be a difference of at least 100 for the network to produce viable results, and only then can the ISO be varied. Furthermore, the creation of the datasets showed that the network is indeed not generalizable to other sensors once trained. Finally, when choosing the device it needs to be tested if the bayer filter and RAW output is easily translatable to the network, since this is often not very clearly defined between brands and not always the same for the network.
+When creating new datasets to use on the network, the environment for creating datasets needs to be strictly defined. It needs to be paid special attention to that the camera does not move in between taking a long and short image of the scene, the ratio of the exposure time needs to be a difference of at least 100 for the network to produce viable results, and only then can the ISO be varied. Furthermore, the creation of the datasets showed that the network is indeed not generalisable to other sensors once trained. Finally, when choosing the device it needs to be tested if the Bayer filter and RAW output is easily translatable to the network, since this is often not very clearly defined between brands and not always the same for the network.
 
 When testing the different hyperparameters and doing the ablation study the overall conclusion is that they were very well tuned. Although it also showed that the network is not very robust, since any change degraded the output quality.
 
@@ -414,7 +414,7 @@ Overall the paper presented its work very well. Some details, such as to make su
 ## Authors <a name="authors"></a>
 #### Group 5
 Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams check<br>
-Floor Joosen (4814495) e-mail: New data, Hyperparams check<br>
+Floor Joosen (4814495) f.e.joosen@student.tudelft.nl: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
 ## References <a name="references"></a>
