@@ -4,7 +4,6 @@
 title: ""
 layout: page
 ---
-# Learning to See in the Dark - Reproduction Project
 ## Index
 1. [Introduction](#introduction)
 2. [Paper summary](#paper)
