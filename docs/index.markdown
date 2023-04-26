@@ -20,7 +20,13 @@ layout: page
 
 
 ## Introduction <a name="introduction"></a>
-In this project we tried to reproduce the results of the Learning to See in the Dark (cite) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology.
+In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology. This paper entailed two major contributions: the See-in-the-Dark (SID) dataset and a pipeline to undarken image with very little to no light present.
+
+The SID dataset consists of images from two cameras: the Sony alpha-7S II and the Fujifilm X-T2. These images come in sets. The ground truth image is an image with a high exposure time, which brightens the image in a non-artificial way. This image is paired with one or multiple short exposure time images, which the network will try and learn how to transform to the ground truth images. All these images are provided in the raw format, so as raw sensor data compared to a compressed PNG or JPEG. With this format, you lose a minimal amount of information.
+
+The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images.
+
+In this blog post, we want to deepen our understanding of the pipeline. To achieve this, we will perform hyperparameter checks and an ablation study. This way, we want to uncover why the network is the way it is, and how robust this network actually is. To deepen our understanding of the data collection and image pipeline, we will be collecting data ourselves. This will be done with both mobile phones and cameras, to see how generalizable this solution actually is.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is important. If a paper has never been reproduced it is not possible to know if the findings are correct or not. It is possible that the original authors have made a mistake, or that they cherry picked certain results. By trying to reproduce the results of a paper we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable a method is. If it is possible to reproduce a result but very difficult, it can be that while the findings of a paper are still important, they are not very applicable in the real world.
@@ -60,7 +66,7 @@ Each datasets consists of long and corresponding short images, totalling 10 long
 - C2: [Canon EOS 100D](#making-of-dataset-c2)
 - P1: [OnePlus Nord 2](#making-of-dataset-p1)
 - P2: [OnePlus 7](#making-of-dataset-p2)
-- P3: [REMCO'S PHONE](#making-of-dataset-p3)
+- P3: [Samsung Galaxy S22](#making-of-dataset-p3)
 
 In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
 
@@ -79,7 +85,7 @@ To test how well the network generalised, we planned on training a model for eac
 
 When making the datasets we ran into several challenges. These challenges are first explained before finally considering the results.
 
-### Making of Dataset C1 <a name="making-of-dataset-c1"><\a>
+### Making of Dataset C1 <a name="making-of-dataset-c1"></a>
 The Canon 90d has a 32,5 Megapixel APS-C CMOS-sensor sensor that can shoot CR3 14-bit RAW images and has a Bayer filter ("Canon EOS 90D-camera", n.d.). Since the Sony images created by the authors of the paper also has a Bayer filter, we can use the same training file for these images. We used a tripod to keep the camera steady while taking the different images. However, since we did still have to touch the camera to change the settings and take the images it was impossible to prevent the camera from slightly shifting between different shots. 
 
 To create the images we took bright images and dark images to function as the long and short images in the data sets. In the paper they show that both their ISO and exposure time varies between the long and short images. So, to create the Canon 90d data set we played around with the ISO and exposure time for each photo, trying to get images that looked to be of similar light levels as the original data set. However, what we did not pay sufficient attention to was the fact that they mention that the exposure of the long photo is 100-300 times larger than for the short photo. For the photos in this data set the ratio between the exposure is significantly smaller for most pairs of photos, with for quite a few photos this ratio being below 10. This turned out to be a problem.
@@ -127,7 +133,7 @@ This did impact the results of this dataset, as the images are relatively good, 
 
 These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
   
-### Making of Dataset P2 <a name="making-of-dataset-p2"><\a>
+### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 
 ![](./images/OnePlus7_1.png)
@@ -140,8 +146,14 @@ To make sure the problem did not have anything to do with the bit depth, we also
 
 For these images the exposure ratio again is mostly not between 100 and 300. Therefore it is likely that the ratio is again the problem. 
 
-### Making of Dataset P3 <a name="making-of-dataset-p3"><\a>
+### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
 TODO: WRITE ABOUT REMCO'S PHONE
+
+![](./images/samsung_sample.png)
+
+![](./images/samsung_on_samsung.png)
+
+![](./images/samsung_on_oneplus.png)
 
 ### Results of Experiments
 The results of the experiments can be viewed in the following table:
@@ -251,6 +263,36 @@ Solely out of curiosity, we dicided to see what would happen with four learning 
 
 From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only margianally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
 
+### Patch size
+For the learning rate, we wanted to find out why the specific patch size was chosen. In the default version, a patch size of 512x512 is chosen to train on. To inspect the effect of the size, we try different patch sizer or different combinations there of. The following patch sizes are used, with the corresponding PSNR and SSIM scores:
+
+|					Patch size value					| PSNR  | SSIM  |
+|-------------------------------------------------------|-------|-------|
+| Default (512)											| 30.10 | 0.80  |
+| 1														| 28.35 | 0.25  |
+| 64													| 29.66 | 0.77  |
+| 128													| 29.85 | 0.78  |
+| 256													| 30.01 | 0.79  |
+| 650													| 30.17 | 0.80  |
+| Random from [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]	| 29.82 | 0.76  |
+| Random from [8, 16, 32, 64]							| 28.87 | 0.74  |
+| Random from [16, 32, 64, 128, 256, 512]				| 28.90 | 0.77  |
+| Random from [64, 128, 256, 512]						| 30.10 | 0.79  |
+
+These different learning rate (combinations) will visually be evaluated towards the following baseline:
+
+![](./images/ps_gt&default.png)
+
+#### Minimizing or increasing patch size
+Altering the training patch size seems to effect the coloration of the images the most. In the extreme case of a patch size of 1, very little actual color seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximatly 10 times faster then iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
+
+![](./images/ps_singles.png)
+
+#### Randomly selecting patch sizes
+Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are maginally better then most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations with a smaller patch size might be significantly faster.  
+
+![](./images/ps_randoms.png)
+
 ## Ablation study <a name="ablation-study"></a>
 During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original data set that we talked about in the Method section.
 
@@ -329,5 +371,6 @@ Floor Joosen (4814495) e-mail: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
 ## References <a name="references"></a>
+"Learning to See in the Dark". (n.d.). Retrieved from https://arxiv.org/abs/1805.01934
 "Canon EOS 90D-camera". (n.d.). Retrieved from https://www.canon.nl/cameras/eos-90d/specifications/
 "OnePlus 7". (n.d.). Retrieved from https://www.oneplus.com/nl/7/specs
