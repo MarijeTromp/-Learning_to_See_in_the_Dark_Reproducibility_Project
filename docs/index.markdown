@@ -416,6 +416,10 @@ Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams chec
 Floor Joosen (4814495) f.e.joosen@student.tudelft.nl: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
+#### Data
+The images used can be found here: https://drive.google.com/drive/folders/1-WvhaLVh7EzWN6PMxix_heBFjCvESS6h?usp=sharing.
+If the files are no longer available, please contact one of us at the e-mail addresses above. 
+
 ## References <a name="references"></a>
 "Learning to See in the Dark". (n.d.). Retrieved from https://arxiv.org/abs/1805.01934
 "Canon EOS 90D-camera". (n.d.). Retrieved from https://www.canon.nl/cameras/eos-90d/specifications/
