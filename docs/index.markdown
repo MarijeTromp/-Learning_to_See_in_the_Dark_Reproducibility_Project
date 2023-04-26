@@ -392,8 +392,21 @@ So, in this ablation study we have shown that while all layers of the network ar
 
 Note: If you are doing an ablation study, make sure that the network in the test file is the same as the one from the train file. Otherwise the model will only give a black image as output. 
 
-## Conclusions and Final remarks <a name="conclusions-and-final-remarks"></a>
+## Discussion
+One discussion point we wanted to address outside of the experiments we ran is the metrics used to determine image quality. SSIM is a measure of structural similarity on the grayscale of the images. This means that PSNR is the only value judging the colours of the images. However, it seems like a bad metric. The PSNR mentioned in the paper for their default run on Sony is 28.88. We found across all of our experiments that the PSNR of seemingly terrible results was comparable or even better than the PSNR mentioned as the default in the paper. An example below is of an image where the ratio is 1, that has a PSNR of ....
 
+![](./images/psnr_example.png)
+
+This is about the same value as mentioned in the paper. This could, for example, be due to the fact that they have more images in their test and train set and that this would make the overall average lower. However, if the average of output images was equal to the image above we would argue that is not a very good result. Another reasoning is that the average is overall sensitive to outliers, and maybe there were just some outliers in their output. On one hand this would have then been interesting to know about, but on the other hand then possibly using the mean of the PSNR and SSIM would have been a better measure to combat this issue. Finally, the PSNR could just also be a bad metric to determine image quality. Since it is then the only judge of the colour quality of an image, a different metric should have been chosen. 
+
+Whatever caused this oddity, it cannot be determined since it was not shared how the SSIM and PSNR were determined. This might stand to reason since these are standardised values. However, it would have been educative to be able to determine why this difference seems to be there.
+
+## Conclusions and Final remarks <a name="conclusions-and-final-remarks"></a>
+When creating new datasets to use on the network, the environment for creating datasets needs to be strictly defined. It needs to be paid special attention to that the camera does not move in between taking a long and short image of the scene, the ratio of the exposure time needs to be a difference of at least 100 for the network to produce viable results, and only then can the ISO be varied. Furthermore, the creation of the datasets showed that the network is indeed not generalizable to other sensors once trained. Finally, when choosing the device it needs to be tested if the bayer filter and RAW output is easily translatable to the network, since this is often not very clearly defined between brands and not always the same for the network.
+
+When testing the different hyperparameters and doing the ablation study the overall conclusion is that they were very well tuned. Although it also showed that the network is not very robust, since any change degraded the output quality.
+
+Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
 
 ## Authors <a name="authors"></a>
 #### Group 5
