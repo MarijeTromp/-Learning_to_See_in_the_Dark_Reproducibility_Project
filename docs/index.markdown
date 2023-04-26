@@ -102,11 +102,31 @@ While the output is far from perfect, it is significantly better than when we us
 During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
 ### Making of Dataset C2 <a name="making-of-dataset-c2"><\a>
-TODO WRITE ABOUT CANON EOS 100D
+For the making of the dataset C2, the Canon EOS 100D was used. This camera has a 18 MP CMOS sensor that can shoot 14 bit-depth images in CR2 format. This is a Canon version of the RAW format. The sensor has a quad bayer filter and a max ISO of 12800.
+  
+Difficulties experienced while creating the C2 dataset is that this camera did not have a tripod. Also, the night in question it had been raining. In order to protect the camera a stool had been taken to put the camera on when making pictures. This means every outside image is taken from a relatively low angle. 
+  
+Another difficulty was that the uncomfortable low angle meant it was hard to manually focus the camera. This is why auto-focus was first used, sometimes in combination with the flash, so that the camera would adjust its own sharpness. Then manual focus was turned on, and the flash was turned off to make the actual pictures. The flash was used since auto-focus did not work at lower light levels, since it would have nothing to focus on. This did mean that the images had to be taken in closer proximity to the objects, so that the flash would illuminate it.
+  
+These two challenges combined, made the dataset automatically biased towards close proximity objects from a lower angle.
+  
+Finally, as with the other datasets it was challenging not to move the camera while having to change the settings.
+
+![F2_dataset](https://user-images.githubusercontent.com/45147538/234540889-79a72e32-c02f-4b7c-9c0f-78b50df28234.png)
   
 ### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
-TODO WRITE ABOUT ONEPLUS NORD 2
+Dataset P1 was created using the main camera of the OnePlus Nord 2. This camera has a Sony IMX766 sensor that can shoot 50 MP images with bit-depth of 10 in DNG format. DNG is an open source version of the RAW format. The sensor has a quad bayer filter and a max ISO of 6400.
+  
+One challenge is that no stand or other tool was available to hold the phone in place while taking pictures. This is why the phone was positioned on top of the surface of an object to try and mitigate movement while taking pictures. This method stopped the phone from moving up, down, left and right during the making of the images. However, it did not stop the angle of the phone from moving, a.k.a. tilting the phone more or less. This resulted in the long and short images still varying w.r.t. one another. This variation was seen when training the model on this dataset, because double lines started appearing in the output images. This can for example especially been seen in this result from the training at epoch 4000. On the left if the ground truth patch taken for training, and on the right is the same patch as output.
 
+  ![F1_dataset_lines](https://user-images.githubusercontent.com/45147538/234545645-d59eac31-c537-4407-b462-6ddf544c2f78.png)
+
+This did impact the results of this dataset, as the images are relatively good, but with double lines, as can be seen in this test image.
+
+  ![F1_dataset_results](https://user-images.githubusercontent.com/45147538/234546504-8098a18f-a0d5-4d3b-9cfe-3d10a416cc02.png)
+
+These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
+  
 ### Making of Dataset P2 <a name="making-of-dataset-p2"><\a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 
