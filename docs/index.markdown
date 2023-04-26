@@ -52,7 +52,13 @@ For this part of our experiments, the goal was to discover how well the network 
 
 Here we made the distinction of camera's on phones, or dedicated camera's. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
 
-TODO: INSERT TABLE!!
+| Device          | Sensor Merk | Bit depth | Bayer filter  | Dimensions  |
+|-----------------|-------------|-----------|---------------|-------------|
+| OnePlus Nord 2  | Sony        | 10        | Quad          | 4096 x 3072 |
+| OnePlus 7       | Sony        | 10        | Quad          | 4000 x 3000 |
+| REMCO'S PHONE   |             | 12        |               | 4000 x 3000 |
+| Canon 90D       | Canon       | 14        | Quad          | 6984 x 4660 |
+| Canon EOS 100D  | Canon       | 14        | Quad          | 5208 x 3476 |
 
 Each datasets consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
 - S: SID-subset
@@ -63,6 +69,8 @@ Each datasets consists of long and corresponding short images, totalling 10 long
 - P3: [Samsung Galaxy S22](#making-of-dataset-p3)
 
 In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
+
+The table shows the dimensions of each device. The dimensions of the images in dataset S are 4256 x 2848. For the experiments we limited the images to be 4000 x 2800 to fit every dimension equally. In order to cut the images to size, the top left corner was used.
 
 To test how well the network generalised, we planned on training a model for each type of dataset, and then testing these models also each on one type of dataset:
 - (S, S): train model on dataset S, test on dataset S.
@@ -99,12 +107,32 @@ While the output is far from perfect, it is significantly better than when we us
 
 During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
-### Making of Dataset C2 <a name="making-of-dataset-c2"></a>
-TODO: WRITE ABOUT CANON EOS 100D
+### Making of Dataset C2 <a name="making-of-dataset-c2"><\a>
+For the making of the dataset C2, the Canon EOS 100D was used. This camera has a 18 MP CMOS sensor that can shoot 14 bit-depth images in CR2 format. This is a Canon version of the RAW format. The sensor has a quad bayer filter and a max ISO of 12800.
+  
+Difficulties experienced while creating the C2 dataset is that this camera did not have a tripod. Also, the night in question it had been raining. In order to protect the camera a stool had been taken to put the camera on when making pictures. This means every outside image is taken from a relatively low angle. 
+  
+Another difficulty was that the uncomfortable low angle meant it was hard to manually focus the camera. This is why auto-focus was first used, sometimes in combination with the flash, so that the camera would adjust its own sharpness. Then manual focus was turned on, and the flash was turned off to make the actual pictures. The flash was used since auto-focus did not work at lower light levels, since it would have nothing to focus on. This did mean that the images had to be taken in closer proximity to the objects, so that the flash would illuminate it.
+  
+These two challenges combined, made the dataset automatically biased towards close proximity objects from a lower angle.
+  
+Finally, as with the other datasets it was challenging not to move the camera while having to change the settings.
 
-### Making of Dataset P1 <a name="making-of-dataset-p1"></a>
-TODO WRITE ABOUT ONEPLUS NORD 2
+![F2_dataset](https://user-images.githubusercontent.com/45147538/234540889-79a72e32-c02f-4b7c-9c0f-78b50df28234.png)
+  
+### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
+Dataset P1 was created using the main camera of the OnePlus Nord 2. This camera has a Sony IMX766 sensor that can shoot 50 MP images with bit-depth of 10 in DNG format. DNG is an open source version of the RAW format. The sensor has a quad bayer filter and a max ISO of 6400.
+  
+One challenge is that no stand or other tool was available to hold the phone in place while taking pictures. This is why the phone was positioned on top of the surface of an object to try and mitigate movement while taking pictures. This method stopped the phone from moving up, down, left and right during the making of the images. However, it did not stop the angle of the phone from moving, a.k.a. tilting the phone more or less. This resulted in the long and short images still varying w.r.t. one another. This variation was seen when training the model on this dataset, because double lines started appearing in the output images. This can for example especially been seen in this result from the training at epoch 4000. On the left if the ground truth patch taken for training, and on the right is the same patch as output.
 
+  ![F1_dataset_lines](https://user-images.githubusercontent.com/45147538/234545645-d59eac31-c537-4407-b462-6ddf544c2f78.png)
+
+This did impact the results of this dataset, as the images are relatively good, but with double lines, as can be seen in this test image.
+
+  ![F1_dataset_results](https://user-images.githubusercontent.com/45147538/234546504-8098a18f-a0d5-4d3b-9cfe-3d10a416cc02.png)
+
+These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
+  
 ### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 
@@ -139,12 +167,39 @@ TODO: INSERT TABLE!!
 ## Hyperparams check <a name="hyperparams-check"></a>
 
 ### Amplification
-TODO: WRITE ABOUT AMPLIFICATION
+One interesting hyperparameter we found in the paper was the amplification. In the paper it was mentioned that this needed to be manually determined, but that they defined it as the ratio between the exposure time of the ground truth image (long), and that of the input image (short). In the code we found that a maximum was also defined at 300. 
+  
+  `ratio = min(gt_exposure / in_exposure, 300)`
+  
+This ratio is then factored with the values in the image after subtracting the black levels. This magnifies the values making it closer to what is expected in the ground truth which had a longer exposure time. With the way the SID dataset was created, the ratio was always either 100, 250 or 300. 
 
+First we wondered what would happen if we removed the ratio altogether. We did this by hardcoding ratio to be 1. The expectation would be that the image would be much darker. This happened in the most part, as the images were mostly black and white. Something that we did not expect is that the images also had seemingly random applications of bright red and yellow colours. The red seemed to mostly organise in blotches, while the yellow seemed to create borders.
+  
+  ![amp_1_results](https://user-images.githubusercontent.com/45147538/234528935-e3e24bb1-8432-4a44-bd1b-4658e59e0490.png)
+
+One hypothesis for the red colouring is that it overtrained on one image of the training set. Red is not very common in those images, except for an image of red flowers.
+  
+  ![red_flowers](https://user-images.githubusercontent.com/45147538/234534415-41d236a2-b974-4897-810d-e345c63f6759.png)
+
+One thing that obviously was clear is that the amplification was a very important hyperparameter for training the network.
+  
+Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occured in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
+  
+  ![amp_hardcoded_results](https://user-images.githubusercontent.com/45147538/234532517-e4e1293c-7b29-4ab4-a584-660930a9afee.png)
+
+So it seems that it is still important to dynamically decide the ratio, rather than hardcoding it to be one value.
+  
+Next we wanted to see what would happen if the maximum of the ratio was taken away. However, nothing interesting happened in this case, since it dynamically seemed to only go up to 300. Instead we hardcoded the ratio again to be double the current maximum, 600. We wondered if this would make the images brighter. As can be seen above, it did not change the results much from the other hardcoded values.
+  
+Finally, we also trained and tested on a randomized ratio as a baseline for the results.  
+  
+The results in PSNR and SSIM can be seen in the table below. This mostly confirms what was already visible in the images above. The default way of dynamically setting the ratio to the ratio between the exposure time of the ground truth and input image is the best method. Hardcoding values made the results worse, but none of the hardcoded values differed much from each other. Not having a maximum seemed to perform worse, but since it came down to the default method this might have been random chance from the patch size training. Randomizing did about as well as hardcoding the ratio.
+  
+  
 |   Ratio   |	PSNR    |	SSIM    |
 |-----------|-----------|-----------|
 |   Default |	30.43	|   0.83    |
-|   1   	|   28.75   |	0.73    |
+|   1   	  |   28.75   |	0.73    |
 |   100     |	29.43	|   0.75    |
 |   250     |	29.32   |	0.74    |
 |   300     |	28.75   |	0.72    |
@@ -153,15 +208,18 @@ TODO: WRITE ABOUT AMPLIFICATION
 |   random  |	29.05   |	0.72    |
 
 ### Epochs
-TODO: WRITE ABOUT EPOCHS
+Epochs is another hyperparameter that could be varied in the code. During the first couple times training the network we noticed that it already showed relatively good results at epoch 500 (the first training checkpoint in the code). So, we wanted to test an extremely low amount of epochs to see if this also already had good results. This is why we selected `epoch = 10`. Next, we wanted to test at the first checkpoint, `epoch = 500`. The default is 4000. To try and see if we could get the network to overtrain we also tried `epoch = 8000`.
+  
+![epoch_results](https://user-images.githubusercontent.com/45147538/234537173-0f3fff80-0da1-4c89-be21-3b8beb0f59eb.png)
 
+What can be seen in the results is that at epoch 10 you can already clearly make out what the object in the image is. For so little epochs this was a surprising result. At epoch 500 the colours are starting to be defined and the image is a bit sharper. The default is epoch 4000. Here it is hard to find differences between the ground truth and the output. Epoch 8000 seems comparable. These findings are also largely supported in the PSNR and SSIM results shown in the table below. One thing that wasn't immediately clear is that the quality at epoch 8000 seems slightly less than at 4000. 
+  
 |   Epochs  |	PSNR    |	SSIM    |
-|-----------|-----------|-----------|
-|   10      |	28.25	|   0.65    |
+|-----------|---------|---------|
+|   10      |	28.25	  | 0.65    |
 |   500     |	29.42   |	0.74    |
 |   4000    |	30.43   |	0.83    |
 |   8000    |	30.16   |	0.81    |
-
 
 ### Learning rate
 For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
