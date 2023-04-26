@@ -46,7 +46,13 @@ For this part of our experiments, the goal was to discover how well the network 
 
 Here we made the distinction of camera's on phones, or dedicated camera's. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
 
-TODO: INSERT TABLE!!
+| Device          | Sensor Merk | Bit depth | Bayer filter  | Dimensions  |
+|-----------------|-------------|-----------|---------------|-------------|
+| OnePlus Nord 2  | Sony        | 10        | Quad          | 4096 x 3072 |
+| OnePlus 7       | Sony        | 10        | Quad          | 4000 x 3000 |
+| REMCO'S PHONE   |             | 12        |               | 4000 x 3000 |
+| Canon 90D       | Canon       | 14        | Quad          | 6984 x 4660 |
+| Canon EOS 100D  | Canon       | 14        | Quad          | 5208 x 3476 |
 
 Each datasets consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
 - S: SID-subset
@@ -57,6 +63,8 @@ Each datasets consists of long and corresponding short images, totalling 10 long
 - P3: [REMCO'S PHONE](#making-of-dataset-p3)
 
 In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
+
+The table shows the dimensions of each device. The dimensions of the images in dataset S are 4256 x 2848. For the experiments we limited the images to be 4000 x 2800 to fit every dimension equally. In order to cut the images to size, the top left corner was used.
 
 To test how well the network generalised, we planned on training a model for each type of dataset, and then testing these models also each on one type of dataset:
 - (S, S): train model on dataset S, test on dataset S.
@@ -94,8 +102,8 @@ While the output is far from perfect, it is significantly better than when we us
 During the training of the model the code only uses the exposure time, not the ISO. When you change the ISO instead of keeping the ratio correct, the results are not good. So, the results of this new data set show how important it is to keep in mind that the ratio between the exposure time for the long images and the short images should be between 100 and 300. Only then should the ISO be changed to get a sufficiently (un)lit image. It also shows how difficult it is to get a good data set. Of course it is also possible that the problem lies somewhere else, but the results from these experiments seem to point in this direction.
 
 ### Making of Dataset C2 <a name="making-of-dataset-c2"><\a>
-TODO: WRITE ABOUT CANON EOS 100D
-
+TODO WRITE ABOUT CANON EOS 100D
+  
 ### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
 TODO WRITE ABOUT ONEPLUS NORD 2
 
@@ -127,12 +135,39 @@ TODO: INSERT TABLE!!
 ## Hyperparams check <a name="hyperparams-check"></a>
 
 ### Amplification
-TODO: WRITE ABOUT AMPLIFICATION
+One interesting hyperparameter we found in the paper was the amplification. In the paper it was mentioned that this needed to be manually determined, but that they defined it as the ratio between the exposure time of the ground truth image (long), and that of the input image (short). In the code we found that a maximum was also defined at 300. 
+  
+  `ratio = min(gt_exposure / in_exposure, 300)`
+  
+This ratio is then factored with the values in the image after subtracting the black levels. This magnifies the values making it closer to what is expected in the ground truth which had a longer exposure time. With the way the SID dataset was created, the ratio was always either 100, 250 or 300. 
 
+First we wondered what would happen if we removed the ratio altogether. We did this by hardcoding ratio to be 1. The expectation would be that the image would be much darker. This happened in the most part, as the images were mostly black and white. Something that we did not expect is that the images also had seemingly random applications of bright red and yellow colours. The red seemed to mostly organise in blotches, while the yellow seemed to create borders.
+  
+  ![amp_1_results](https://user-images.githubusercontent.com/45147538/234528935-e3e24bb1-8432-4a44-bd1b-4658e59e0490.png)
+
+One hypothesis for the red colouring is that it overtrained on one image of the training set. Red is not very common in those images, except for an image of red flowers.
+  
+  ![red_flowers](https://user-images.githubusercontent.com/45147538/234534415-41d236a2-b974-4897-810d-e345c63f6759.png)
+
+One thing that obviously was clear is that the amplification was a very important hyperparameter for training the network.
+  
+Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occured in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
+  
+  ![amp_hardcoded_results](https://user-images.githubusercontent.com/45147538/234532517-e4e1293c-7b29-4ab4-a584-660930a9afee.png)
+
+So it seems that it is still important to dynamically decide the ratio, rather than hardcoding it to be one value.
+  
+Next we wanted to see what would happen if the maximum of the ratio was taken away. However, nothing interesting happened in this case, since it dynamically seemed to only go up to 300. Instead we hardcoded the ratio again to be double the current maximum, 600. We wondered if this would make the images brighter. As can be seen above, it did not change the results much from the other hardcoded values.
+  
+Finally, we also trained and tested on a randomized ratio as a baseline for the results.  
+  
+The results in PSNR and SSIM can be seen in the table below. This mostly confirms what was already visible in the images above. The default way of dynamically setting the ratio to the ratio between the exposure time of the ground truth and input image is the best method. Hardcoding values made the results worse, but none of the hardcoded values differed much from each other. Not having a maximum seemed to perform worse, but since it came down to the default method this might have been random chance from the patch size training. Randomizing did about as well as hardcoding the ratio.
+  
+  
 |   Ratio   |	PSNR    |	SSIM    |
 |-----------|-----------|-----------|
 |   Default |	30.43	|   0.83    |
-|   1   	|   28.75   |	0.73    |
+|   1   	  |   28.75   |	0.73    |
 |   100     |	29.43	|   0.75    |
 |   250     |	29.32   |	0.74    |
 |   300     |	28.75   |	0.72    |
