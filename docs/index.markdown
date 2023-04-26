@@ -176,15 +176,18 @@ The results in PSNR and SSIM can be seen in the table below. This mostly confirm
 |   random  |	29.05   |	0.72    |
 
 ### Epochs
-TODO: WRITE ABOUT EPOCHS
+Epochs is another hyperparameter that could be varied in the code. During the first couple times training the network we noticed that it already showed relatively good results at epoch 500 (the first training checkpoint in the code). So, we wanted to test an extremely low amount of epochs to see if this also already had good results. This is why we selected `epoch = 10`. Next, we wanted to test at the first checkpoint, `epoch = 500`. The default is 4000. To try and see if we could get the network to overtrain we also tried `epoch = 8000`.
+  
+![epoch_results](https://user-images.githubusercontent.com/45147538/234537173-0f3fff80-0da1-4c89-be21-3b8beb0f59eb.png)
 
+What can be seen in the results is that at epoch 10 you can already clearly make out what the object in the image is. For so little epochs this was a surprising result. At epoch 500 the colours are starting to be defined and the image is a bit sharper. The default is epoch 4000. Here it is hard to find differences between the ground truth and the output. Epoch 8000 seems comparable. These findings are also largely supported in the PSNR and SSIM results shown in the table below. One thing that wasn't immediately clear is that the quality at epoch 8000 seems slightly less than at 4000. 
+  
 |   Epochs  |	PSNR    |	SSIM    |
-|-----------|-----------|-----------|
-|   10      |	28.25	|   0.65    |
+|-----------|---------|---------|
+|   10      |	28.25	  | 0.65    |
 |   500     |	29.42   |	0.74    |
 |   4000    |	30.43   |	0.83    |
 |   8000    |	30.16   |	0.81    |
-
 
 ### Learning rate
 For the learning rate, we wanted to find out why the specific values were chosen. In the default version, the first 2000 epochs use a learning rate of 1e-4, wheras the final 2000 epochs use a learning rate of 1e-5. To inspect the effect of the learning rate, we try different learning rates or different combinations there of. The following learning rates are used, with the corresponding PSNR and SSIM scores:
