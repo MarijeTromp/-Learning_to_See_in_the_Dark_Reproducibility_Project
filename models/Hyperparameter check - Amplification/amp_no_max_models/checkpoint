@@ -1,0 +1,2 @@
+model_checkpoint_path: "REPLACE_THIS_WITH_YOUR_PATH_TO_MODEL/model.ckpt"
+all_model_checkpoint_paths: "REPLACE_THIS_WITH_YOUR_PATH_TO_MODEL//model.ckpt"
