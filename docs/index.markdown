@@ -7,16 +7,16 @@ layout: page
 
 ## Index
 1. [Introduction](#introduction)
-2. [Value of a reproduction](#value-of-a-reproduction)
-3. [Paper summary](#paper)
+2. [Paper summary](#paper)
 3. [Main project goals](#goals)
-4. [Method](#method)
-5. [New data](#new-data)
-6. [Hyperparams check](#hyperparams-check)
-7. [Ablation study](#ablation-study)
-8. [Conclusions and final remarks](#conclusions-and-final-remarks)
-9. [Authors](#authors)
-10. [References](#references)
+4. [Value of a reproduction](#value-of-a-reproduction)
+5. [Method](#method)
+6. [New data](#new-data)
+7. [Hyperparams check](#hyperparams-check)
+8. [Ablation study](#ablation-study)
+9. [Conclusions and final remarks](#conclusions-and-final-remarks)
+10. [Authors](#authors)
+11. [References](#references)
 
 
 ## Introduction <a name="introduction"></a>
@@ -28,13 +28,13 @@ The Learning to See in the Dark pipeline directly uses these raw images for the 
 
 In this blog post, we want to deepen our understanding of the pipeline. To achieve this, we will perform hyperparameter checks and an ablation study. This way, we want to uncover why the network is the way it is, and how robust this network actually is. To deepen our understanding of the data collection and image pipeline, we will be collecting data ourselves. This will be done with both mobile phones and cameras, to see how generalizable this solution actually is.
 
-## Value of a reproduction <a name= "value-of-a-reproduction"></a>
-Doing a reproduction project is important. If a paper has never been reproduced it is not possible to know if the findings are correct or not. It is possible that the original authors have made a mistake, or that they cherry picked certain results. By trying to reproduce the results of a paper we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable a method is. If it is possible to reproduce a result but very difficult, it can be that while the findings of a paper are still important, they are not very applicable in the real world.
-
 ## Paper summary <a name="paper"></a>
 This is a paper
 
 ## Main project goals <a name="goals"></a>
+
+## Value of a reproduction <a name= "value-of-a-reproduction"></a>
+Doing a reproduction project is important. If a paper has never been reproduced it is not possible to know if the findings are correct or not. It is possible that the original authors have made a mistake, or that they cherry picked certain results. By trying to reproduce the results of a paper we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable a method is. If it is possible to reproduce a result but very difficult, it can be that while the findings of a paper are still important, they are not very applicable in the real world.
 
 
 ## Method <a name="method"></a>
