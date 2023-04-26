@@ -37,13 +37,16 @@ There are a few main goals we have for this reproduction project. For the new da
 For the hyperparameter section the main goals are to check how well tuned the hyperparameters are and how sensitive the network is. For the ablation study our main goal is to check if this specific network is the best network possible for this problem.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
-Doing a reproduction project is certainly important. If a paper has never been reproduced, it is not possible to know if the findings are actually valid or not. It is possible that the original authors made some mistake, or that they used more favorable results. By reproducing the results of a paper, we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable or usable a method is. If it is very difficult to reproduce a result, it may be that while the findings of a paper are still important or valid, but they may not be very applicable in the real world.
-
+Doing a reproduction project is certainly important. If a paper has never been reproduced, it is not possible to know if the findings are actually valid or not. It is possible that the original authors made some mistake, or that they used more favorable results. By reproducing the results of a paper, we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable or usable a method is. If it is very difficult to reproduce a result, it may be that while the findings of a paper are still important or valid, but they may not be very applicable in the real world. Another example could be that the network presented is larger than need be, or other optimizations can be applied to improve the performance. Not to mention that future works can be built on a paper only if the orginal results can be recreated.
 
 ## Method <a name="method"></a>
 The original data set from the authors of the paper is too large to use for the many different experiments we wanted to run during our limited timeframe. Therefore we picked a subset of 10 train images and 10 test images. Half of the train and test set are images taken inside and half of the train and test set are images taken outside. 
 
-To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new data sets which also consist of 10 train images and 10 test images. For each new data set half of the images was taken inside and half of the images was taken outside. Each data set was created using a different camera sensor (device). The model trained on the subset of the paper was still also tested on all 5 of the new data sets.
+To keep the experiments fair we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments we created new data sets which also consist of 10 long train images and 10 long test images, and their respective short image. For each new data set half of the images was taken inside and half of the images was taken outside. Each data set was created using a different camera sensor (device). 
+
+When training and testing special attention had to be paid to the bit depth of the images of each device. The data has to be adjusted for differing bit depths, otherwise the results will come out wildly different. This is an example of an image with bit depth 14, while the code specified a bit depth of 10:
+
+![](./images/bit_depth_14_on_10.png)
 
 ## New data <a name="new-data"></a>
 For this part of our experiments, the goal was to discover how well the network generalizes to different camera sensors once it has been trained. In order to do so, 5 new datasets were created with the following devices:
@@ -132,7 +135,7 @@ One challenge is that no stand or other tool was available to hold the phone in 
 
 This did impact the results of this dataset, as the images are relatively good, but with double lines, as can be seen in this test image.
 
-  ![P1_dataset_results](./images/F1_dataset_results.png)
+![P1_dataset_results](./images/F1_dataset_results.png)
 
 These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
   
@@ -187,6 +190,7 @@ Given the challenges described in the previous sections, it was difficult to per
 From these results it can be seen that the network is indeed not well generalisable to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional as well as lower quality camera's.
 
 ## Hyperparams check <a name="hyperparams-check"></a>
+In this section we discuss the results of the hyperparameters we have tested.
 
 ### Amplification
 One interesting hyperparameter we found in the paper was the amplification. In the paper it was mentioned that this needed to be manually determined, but that they defined it as the ratio between the exposure time of the ground truth image (long), and that of the input image (short). In the code we found that a maximum was also defined at 300. 
