@@ -188,11 +188,16 @@ Given the challenges described in the previous sections, it was difficult to per
 |-----------|-----------|-------|-------|
 | S         | S         |	30.43 |	0.83  |
 | P1        |	P1        |	30.65 |	0.7   |
-| P1        |	P2        |       |       |		
+| P1        | S         | 28.61 | 0.59  |
 | P1        | P3        |	28.02 |	0.57  |
 | P1        |	C1        |	28.07 |	0.39  |
+| P1        | C2        |       |       |
 
-From these results it can be seen that the network is indeed not well generalisable to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional as well as lower quality camera's.
+From these results it can be seen that the network is indeed not well generalisable to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional as well as lower quality camera's. 
+
+The generalisation performing better or worse dependent on the device types cannot be confirmed, since there were issues with datasets P2 and P3. With those issues, (P1, P3) and (P1, S) seem to be comparable in PSNR and SSIM. However, it cannot be said this would be the same if P3 could have been tested properly. (P1, S) does provide a good example of generalising from a phone with bit depth 10, to a camera with bit depth 14 where the quality clearly degrades.
+
+![](./images/new_data_results.png)
 
 ## Hyperparams check <a name="hyperparams-check"></a>
 In this section we discuss the results of the hyperparameters we have tested.
