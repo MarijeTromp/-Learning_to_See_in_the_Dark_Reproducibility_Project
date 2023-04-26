@@ -118,18 +118,18 @@ These two challenges combined, made the dataset automatically biased towards clo
   
 Finally, as with the other datasets it was challenging not to move the camera while having to change the settings.
 
-![F2_dataset](https://user-images.githubusercontent.com/45147538/234540889-79a72e32-c02f-4b7c-9c0f-78b50df28234.png)
+![C2_dataset](./images/F2_dataset.png)
   
 ### Making of Dataset P1 <a name="making-of-dataset-p1"><\a>
 Dataset P1 was created using the main camera of the OnePlus Nord 2. This camera has a Sony IMX766 sensor that can shoot 50 MP images with bit-depth of 10 in DNG format. DNG is an open source version of the RAW format. The sensor has a quad bayer filter and a max ISO of 6400.
   
 One challenge is that no stand or other tool was available to hold the phone in place while taking pictures. This is why the phone was positioned on top of the surface of an object to try and mitigate movement while taking pictures. This method stopped the phone from moving up, down, left and right during the making of the images. However, it did not stop the angle of the phone from moving, a.k.a. tilting the phone more or less. This resulted in the long and short images still varying w.r.t. one another. This variation was seen when training the model on this dataset, because double lines started appearing in the output images. This can for example especially been seen in this result from the training at epoch 4000. On the left if the ground truth patch taken for training, and on the right is the same patch as output.
 
-  ![F1_dataset_lines](https://user-images.githubusercontent.com/45147538/234545645-d59eac31-c537-4407-b462-6ddf544c2f78.png)
+![P1_dataset_lines](./images/F1_dataset_lines.png)
 
 This did impact the results of this dataset, as the images are relatively good, but with double lines, as can be seen in this test image.
 
-  ![F1_dataset_results](https://user-images.githubusercontent.com/45147538/234546504-8098a18f-a0d5-4d3b-9cfe-3d10a416cc02.png)
+  ![P1_dataset_results](./images/F1_dataset_results.png)
 
 These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
   
@@ -179,17 +179,17 @@ This ratio is then factored with the values in the image after subtracting the b
 
 First we wondered what would happen if we removed the ratio altogether. We did this by hardcoding ratio to be 1. The expectation would be that the image would be much darker. This happened in the most part, as the images were mostly black and white. Something that we did not expect is that the images also had seemingly random applications of bright red and yellow colours. The red seemed to mostly organise in blotches, while the yellow seemed to create borders.
   
-  ![amp_1_results](https://user-images.githubusercontent.com/45147538/234528935-e3e24bb1-8432-4a44-bd1b-4658e59e0490.png)
+  ![amp_1_results](./images/amp_1_results.png)
 
 One hypothesis for the red colouring is that it overtrained on one image of the training set. Red is not very common in those images, except for an image of red flowers.
   
-  ![red_flowers](https://user-images.githubusercontent.com/45147538/234534415-41d236a2-b974-4897-810d-e345c63f6759.png)
+  ![red_flowers](./images/red_flowers.png)
 
 One thing that obviously was clear is that the amplification was a very important hyperparameter for training the network.
   
 Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occured in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
   
-  ![amp_hardcoded_results](https://user-images.githubusercontent.com/45147538/234532517-e4e1293c-7b29-4ab4-a584-660930a9afee.png)
+   ![amp_hardcoded_results](./images/amp_hardcoded_results.png)
 
 So it seems that it is still important to dynamically decide the ratio, rather than hardcoding it to be one value.
   
@@ -214,7 +214,7 @@ The results in PSNR and SSIM can be seen in the table below. This mostly confirm
 ### Epochs
 Epochs is another hyperparameter that could be varied in the code. During the first couple times training the network we noticed that it already showed relatively good results at epoch 500 (the first training checkpoint in the code). So, we wanted to test an extremely low amount of epochs to see if this also already had good results. This is why we selected `epoch = 10`. Next, we wanted to test at the first checkpoint, `epoch = 500`. The default is 4000. To try and see if we could get the network to overtrain we also tried `epoch = 8000`.
   
-![epoch_results](https://user-images.githubusercontent.com/45147538/234537173-0f3fff80-0da1-4c89-be21-3b8beb0f59eb.png)
+![epoch_results](./images/epoch_results.png)
 
 What can be seen in the results is that at epoch 10 you can already clearly make out what the object in the image is. For so little epochs this was a surprising result. At epoch 500 the colours are starting to be defined and the image is a bit sharper. The default is epoch 4000. Here it is hard to find differences between the ground truth and the output. Epoch 8000 seems comparable. These findings are also largely supported in the PSNR and SSIM results shown in the table below. One thing that wasn't immediately clear is that the quality at epoch 8000 seems slightly less than at 4000. 
   
