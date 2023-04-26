@@ -1,10 +1,10 @@
 ---
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-title: "Learning to See in the Dark - Reproduction Project"
+title: ""
 layout: page
 ---
-
+# Learning to See in the Dark - Reproduction Project
 ## Index
 1. [Introduction](#introduction)
 2. [Paper summary](#paper)
