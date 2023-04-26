@@ -20,7 +20,7 @@ layout: page
 
 
 ## Introduction <a name="introduction"></a>
-In this project we tried to reproduce the results of the Learning to See in the Dark (cite) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology.
+In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is important. If a paper has never been reproduced it is not possible to know if the findings are correct or not. It is possible that the original authors have made a mistake, or that they cherry picked certain results. By trying to reproduce the results of a paper we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable a method is. If it is possible to reproduce a result but very difficult, it can be that while the findings of a paper are still important, they are not very applicable in the real world.
@@ -54,7 +54,7 @@ Each datasets consists of long and corresponding short images, totalling 10 long
 - C2: [Canon EOS 100D](#making-of-dataset-c2)
 - P1: [OnePlus Nord 2](#making-of-dataset-p1)
 - P2: [OnePlus 7](#making-of-dataset-p2)
-- P3: [REMCO'S PHONE](#making-of-dataset-p3)
+- P3: [Samsung Galaxy S22](#making-of-dataset-p3)
 
 In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
 
@@ -114,6 +114,12 @@ For these images the exposure ratio again is mostly not between 100 and 300. The
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
 TODO: WRITE ABOUT REMCO'S PHONE
+
+![](./images/samsung_sample.png)
+
+![](./images/samsung_on_samsung.png)
+
+![](./images/samsung_on_oneplus.png)
 
 ### Results of Experiments
 The results of the experiments can be viewed in the following table:
@@ -301,5 +307,6 @@ Floor Joosen (4814495) e-mail: New data, Hyperparams check<br>
 Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
 
 ## References <a name="references"></a>
+"Learning to See in the Dark". (n.d.). Retrieved from https://arxiv.org/abs/1805.01934
 "Canon EOS 90D-camera". (n.d.). Retrieved from https://www.canon.nl/cameras/eos-90d/specifications/
 "OnePlus 7". (n.d.). Retrieved from https://www.oneplus.com/nl/7/specs
