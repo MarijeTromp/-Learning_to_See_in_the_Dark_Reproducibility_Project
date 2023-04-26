@@ -156,13 +156,17 @@ TODO: WRITE ABOUT REMCO'S PHONE
 ![](./images/samsung_on_oneplus.png)
 
 ### Results of Experiments
-The results of the experiments can be viewed in the following table:
+Given the challenges described in the previous sections, it was difficult to perform all of the earlier mentioned experiments. We did still run the experiments shown in the table below.
+  
+| Train set | Test set  | PSNR  | SSIM  |
+|-----------|-----------|-------|-------|
+| S         | S         |	30.43 |	0.83  |
+| P1        |	P1        |	30.65 |	0.7   |
+| P1        |	P2        |       |       |		
+| P1        | P3        |	28.02 |	0.57  |
+| P1        |	C1        |	28.07 |	0.39  |
 
-TODO: INSERT TABLE!!
-
-
-
-
+From these results it can be seen that the network is indeed not well generalisable to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional as well as lower quality camera's.
 
 ## Hyperparams check <a name="hyperparams-check"></a>
 
