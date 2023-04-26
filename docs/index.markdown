@@ -33,6 +33,8 @@ In this blog post, we want to deepen our understanding of the pipeline. To achie
 
 
 ## Main project goals <a name="goals"></a>
+There are a few main goals we have for this reproduction project. For the new data section our main goals are to check if the method is able to generalize to different sensors and to see if models that are trained on images from one sensor can generalize to images from a different sensor.
+For the hyperparameter section the main goals are to check how well tuned the hyperparameters are and how sensitive the network is. For the ablation study our main goal is to check if this specific network is the best network possible for this problem.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is certainly important. If a paper has never been reproduced, it is not possible to know if the findings are actually valid or not. It is possible that the original authors made some mistake, or that they used more favorable results. By reproducing the results of a paper, we can try and see if the results are accurate or not. Reproducing the results is also important because it shows how applicable or usable a method is. If it is very difficult to reproduce a result, it may be that while the findings of a paper are still important or valid, but they may not be very applicable in the real world.
