@@ -20,7 +20,7 @@ layout: page
 
 
 ## Introduction <a name="introduction"></a>
-In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology. 
+In this project we tried to reproduce the results of the Learning to See in the Dark ("Learning to See in the Dark", n.d.) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology. This paper tries to lighten low-light or straight-up black images such that details of the environment can actually be uncovered. It can be pondered upon why one would possibly do this. Besides the angle of it being interesting to explore, another angle could be to smarten the software we use, instead of always blindly upgrading our hardware. Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can smarten our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware, smartening the software could definitely extend the lifeblood of these hardware components. The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the project.
 
 ## Paper summary <a name="paper"></a>
 This paper entailed two major contributions: the See-in-the-Dark (SID) dataset and a pipeline to undarken image with very little to no light present.
