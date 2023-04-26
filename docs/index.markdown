@@ -135,6 +135,7 @@ These results lead us to believe the network can be well utilised also for phone
   
 ### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
+When the ISO is set manually, the maximum is 3200. However, when it is automatic the maximum is 6400. Therefore we kept the ISO on automatic and only changed the exposure between shots. However, this caused the ratio to not be within the correct range. 
 
 ![](./images/OnePlus7_1.png)
 The first time training we did not have the correct exposure time in the image names either, resulting in the outputs in the image above. 
