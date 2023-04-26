@@ -27,9 +27,14 @@ This paper entailed two major contributions: the See-in-the-Dark (SID) dataset a
 
 The SID dataset consists of images from two cameras: the Sony alpha-7S II and the Fujifilm X-T2. These images come in sets. The ground truth image is an image with a high exposure time, which brightens the image in a non-artificial way. This image is paired with one or multiple short exposure time images, which the network will try and learn how to transform to the ground truth images. All these images are provided in the raw format, so as raw sensor data compared to a compressed PNG or JPEG. With this format, you lose a minimal amount of information.
 
-The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images.
+The Learning to See in the Dark pipeline directly uses these raw images for the undarkening. This pipeline uses end-to-end training of a fully convolutional network. This is a newer direction (for the time at least), since they explicitly state that more traditional image processing pipelines perform poorly on such images. They measure the quality of the undarkening by two scores: the Structural Simularity (SSIM) and the Peak Signal-to-Noise Ratio (PSNR). The scores for both images are as follows:
 
-In this blog post, we want to deepen our understanding of the pipeline. To achieve this, we will perform hyperparameter checks and an ablation study. This way, we want to uncover why the network is the way it is, and how robust this network actually is. To deepen our understanding of the data collection and image pipeline, we will be collecting data ourselves. This will be done with both mobile phones and cameras, to see how generalizable this solution actually is.
+|		Device		 |	PSNR     |	SSIM     |
+|--------------------|-----------|-----------|
+|   Sony alpha-7S II |	 28.88	 |   0.79    |
+|   Fujifilm X-T2    |   26.61   |	 0.68    |
+
+In this blog post, we want to deepen our understanding of the pipeline. To achieve this, we will perform hyperparameter checks, an ablation study and collect data ourselves. This way, we can explore why the model is the way that it is, and if we can possibly enhance the model in any way. This exploration will be done solely with the images from the Sony camera, since the Bayer pattern this device uses is more generally used then the pattern of the Fuji camera.
 
 
 ## Main project goals <a name="goals"></a>
