@@ -52,13 +52,13 @@ For this part of our experiments, the goal was to discover how well the network 
 
 Here we made the distinction of camera's on phones, or dedicated camera's. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
 
-| Device          | Sensor Merk | Bit depth | Bayer filter  | Dimensions  |
-|-----------------|-------------|-----------|---------------|-------------|
-| OnePlus Nord 2  | Sony        | 10        | Quad          | 4096 x 3072 |
-| OnePlus 7       | Sony        | 10        | Quad          | 4000 x 3000 |
-| REMCO'S PHONE   |             | 12        |               | 4000 x 3000 |
-| Canon 90D       | Canon       | 14        | Quad          | 6984 x 4660 |
-| Canon EOS 100D  | Canon       | 14        | Quad          | 5208 x 3476 |
+| Device				| Sensor Merk | Bit depth | Bayer filter  | Dimensions  |
+|-----------------------|-------------|-----------|---------------|-------------|
+| OnePlus Nord 2		| Sony        | 10        | Quad          | 4096 x 3072 |
+| OnePlus 7				| Sony        | 10        | Quad          | 4000 x 3000 |
+| Samsung Galaxy s22	|             | 12        |               | 4000 x 3000 |
+| Canon 90D				| Canon       | 14        | Quad          | 6984 x 4660 |
+| Canon EOS 100D		| Canon       | 14        | Quad          | 5208 x 3476 |
 
 Each datasets consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
 - S: SID-subset
@@ -147,13 +147,27 @@ To make sure the problem did not have anything to do with the bit depth, we also
 For these images the exposure ratio again is mostly not between 100 and 300. Therefore it is likely that the ratio is again the problem. 
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
-TODO: WRITE ABOUT REMCO'S PHONE
+The sensor for the Sony camera is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone fort his section, the Samsung galaxy S22, does not have a Bayer filter, but a quad-Bayer filter [1]. While this quad-bayer structure follows the idea of the traditional structure, it is different enough such that it cannot be used for the traditional pipeline. Instead of having singular red, green and blue pixels in a specific pattern, quad-bayer has clusters of pixels in this pattern. It should be possible to remosaic this quad-configuration to the traditional configuration, but we were unable in achieving this. We also found a paper [2] for this for noisy images, which would make it seem like it is a bit beyond our reach for this project. Normally, using the following line:
+
+`im = raw.raw_image_visible.astype(np.float32)`
+
+would result in the network giving an image with a depth of one, but for the Samsung Galaxy S22 pictures it gave images with a depth of four. To make this images usable, we took the average of the four layers as follows:
+
+`im = 0.25*im[:,:,0] + 0.25*im[:,:,1] + 0.25*im[:,:,2] + 0.25*im[:,:,3]`
+
+Granted, this does limit the usability of the results, but even with this method, the network does show some promosing results. Given a set of images like the following images:
 
 ![](./images/samsung_sample.png)
 
+The following images can be optained:
+
 ![](./images/samsung_on_samsung.png)
 
+These results are ofcourse part of the images the network is trained upon, but the following results are from a model trained on dataset M1 for instance:
+
 ![](./images/samsung_on_oneplus.png)
+
+This does show that details can actually be retrieved from this images with this method.
 
 ### Results of Experiments
 Given the challenges described in the previous sections, it was difficult to perform all of the earlier mentioned experiments. We did still run the experiments shown in the table below.
