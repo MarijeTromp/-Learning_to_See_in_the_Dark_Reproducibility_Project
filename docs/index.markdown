@@ -200,7 +200,7 @@ These results are of course part of the images the network is trained upon, but 
 This does show that details can actually be retrieved from this images with this method.
 
 ### Results of Experiments
-Given the challenges described in the previous sections, it was difficult to perform all of the earlier mentioned experiments. We did still run the experiments shown in the table below.
+Given the challenges described in the previous sections, it was difficult to perform all the earlier mentioned experiments. We did still run the experiments shown in the table below.
   
 | Train set | Test set  | PSNR  | SSIM  |
 |-----------|-----------|-------|-------|
@@ -210,7 +210,7 @@ Given the challenges described in the previous sections, it was difficult to per
 | P1        | P3        |	28.02 |	0.57  |
 | P1        |	C1        |	28.07 |	0.39  |
 
-From these results it can be seen that the network is indeed not well generalisable to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional as well as lower quality camera's. 
+From these results, it can be seen that the network does indeed not generalisable well to different devices. We think the small decrease in quality from (S, S) to (P1, P1) is not due to the fact that P1 was made using a phone and S using a camera. Instead, we think it is because the dataset long and short images of P1 were slightly shifted, causing double lines to appear in training. However, a better dataset needs to be created using a phone to be sure. If this is the case, the network can be utilised for both professional cameras and lower quality cameras. 
 
 The generalisation performing better or worse dependent on the device types cannot be confirmed, since there were issues with datasets P2 and P3. With those issues, (P1, P3) and (P1, S) seem to be comparable in PSNR and SSIM. However, it cannot be said this would be the same if P3 could have been tested properly. (P1, S) does provide a good example of generalising from a phone with bit depth 10, to a camera with bit depth 14 where the quality clearly degrades.
 
