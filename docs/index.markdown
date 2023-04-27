@@ -65,7 +65,7 @@ Another example is that the network presented might be larger or more complex th
 ## Method <a name="method"></a>
 The SID dataset is too large to use for the many different experiments we wanted to run during our limited timeframe. Therefore, we picked a subset of 10 long train images and 10 long test images, with their respective short images. Half of the train and test set are images taken inside, and half of the train and test set are images taken outside. These images were only selected from the Sony dataset, since the Bayer pattern on this camera is more generally used than that of the Fuji camera.
 
-To keep the experiments fair, we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments, we created new datasets which also consisted of 10 long train images and 10 long test images, and their respective short images. For each new dataset, half of the images was taken inside and half of the images was taken outside. Each dataset was created using a different camera sensor, depending on the device used. 
+To keep the experiments fair, we used the same train and test set for all experiments, except for the new data experiments. For the new data experiments, we created new datasets which generally also consist of 10 long train images and 10 long test images, and their respective short images. One of the devices, The Samsung Galaxy S22, only has 10 training images, however. For each new dataset, half of the images were taken inside and half of the images were taken outside. Each dataset was created using a different camera sensor, depending on the device used. 
 
 For the training and testing, special attention needs to be paid to the bit depth of the images of each device. The data has to be adjusted for differing bit depths, otherwise the results will come out wildly different. This is an example of an image with bit depth 14, while the code specified a bit depth of 10:
 
@@ -79,7 +79,7 @@ For this part of our experiments, the goal was to discover how well the network 
 - Canon 90D (camera)
 - Canon EOS 100D (camera)
 
-Here we made the distinction of camera's on phones, or dedicated camera's. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
+Here we made the distinction between smartphone cameras and dedicated cameras. This is because we wondered if the generalisation would be better for comparable sensors. The specifications of each camera are given in the table below:
 
 | Device				| Sensor Brand | Bit depth | Bayer filter  | Dimensions  |
 |-----------------------|--------------|-----------|---------------|-------------|
@@ -89,7 +89,7 @@ Here we made the distinction of camera's on phones, or dedicated camera's. This 
 | Canon 90D				| Canon        | 14        | Quad          | 6984 x 4660 |
 | Canon EOS 100D		| Canon        | 14        | Quad          | 5208 x 3476 |
 
-Each dataset consists of long and corresponding short images, totaling 10 long training images and 10 long test images each. For each of these train and test sets half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
+Each dataset generally consists of long and corresponding short images, totalling 10 long training images and 10 long test images each. The Samsung Galaxy S22 dataset only has 10 training images, however. For each of these train and test sets, half of the images were taken inside and half of the images were taken outside. Together with the subset of the SID dataset, this gives the following sets with their abbreviations:
 - S: SID-subset
 - C1: [Canon 90D](#making-of-dataset-c1)
 - C2: [Canon EOS 100D](#making-of-dataset-c2)
@@ -97,9 +97,9 @@ Each dataset consists of long and corresponding short images, totaling 10 long t
 - P2: [OnePlus 7](#making-of-dataset-p2)
 - P3: [Samsung Galaxy S22](#making-of-dataset-p3)
 
-In the abbreviations the P stands for phone, indicating the subset was created using the camera of a phone. C indicates that the subset was created using a dedicated camera. 
+In the abbreviations, the P stands for phone, indicating the subset was created using the camera of a smartphone. C indicates that the subset was created using a dedicated camera. 
 
-The table shows the dimensions of each device. The dimensions of the images in dataset S are 4256 x 2848. For the experiments we limited the images to be 4000 x 2800 to fit every dimension equally. In order to cut the images to size, the top left corner was used.
+The table shows the dimensions of each device. The dimensions of the images in dataset S are 4256 x 2848. For the experiments, we limited the images to be 4000 x 2800 to fit every dimension equally. In order to cut the images to size, the top left corner was used.
 
 To test how well the network generalised, we planned on training a model for each type of dataset, and then testing these models also each on one type of dataset:
 - (S, S): train model on dataset S, test on dataset S.
@@ -112,7 +112,7 @@ To test how well the network generalised, we planned on training a model for eac
 - (P1, P1): train model on dataset P1, test on dataset P1.
 - (P1, C1): train model on dataset P1, test on dataset C1.
 
-When making the datasets we ran into several challenges. These challenges are first explained before finally considering the results.
+When making the datasets, we ran into several challenges. These challenges are first explained before finally considering the results.
 
 ### Making of Dataset C1 <a name="making-of-dataset-c1"></a>
 The Canon 90d has a 32,5 Megapixel APS-C CMOS-sensor sensor that can shoot CR3 14-bit RAW images and has a Bayer filter ("Canon EOS 90D-camera", n.d.). Since the Sony images created by the authors of the paper also has a Bayer filter, we can use the same training file for these images. We used a tripod to keep the camera steady while taking the different images. However, since we did still have to touch the camera to change the settings and take the images it was impossible to prevent the camera from slightly shifting between different shots. 
