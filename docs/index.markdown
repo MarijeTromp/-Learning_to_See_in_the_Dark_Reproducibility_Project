@@ -164,20 +164,20 @@ These results lead us to believe the network can be well utilised also for phone
   
 ### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
-When the ISO is set manually, the maximum is 3200. However, when it is automatic the maximum is 6400. Therefore we kept the ISO on automatic and only changed the exposure between shots. However, this caused the ratio to not be within the correct range. 
+When the ISO is set manually, the maximum is 3200. However, when it is automatic the maximum is 6400. Therefore, we kept the ISO on automatic and only changed the exposure between shots. However, this caused the ratio to not be within the correct range. 
 
 ![](./images/OnePlus7_1.png)
-The first time training we did not have the correct exposure time in the image names either, resulting in the outputs in the image above. 
+The first time training, we did not have the correct exposure time in the image names either, resulting in the outputs in the image above. 
 
 ![](./images/OnePlus7_2.png)
 However, just like for the Canon 90d, changing the exposure times to the correct ones did not make the results better. Doing this resulted in the outputs in the image above. While they are better than for the first trained model, they are still far off of the ground truth images.
 
 To make sure the problem did not have anything to do with the bit depth, we also trained the model using a bit depth of 8. However, these results were significantly worse, so it is likely that this is not the problem. 
 
-For these images the exposure ratio again is mostly not between 100 and 300. Therefore it is likely that the ratio is again the problem. 
+For these images, the exposure ratio again is mostly not between 100 and 300. Therefore, it is likely that the ratio is again the problem. 
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
-The sensor for the Sony camera is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung galaxy S22, did not. This phone has a Tetrapixel RGB Bayer pattern, which should just be another terminology for the Quad-Bayer pattern used for all other devices, but we did not manage to get it working with the provided pipeline. Normally, using the following line:
+The sensor for the Sony camera is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 ("Samsung Galaxy S22 camera", 2023), which uses a Tetrapixel RGB Bayer pattern ("ISOCELL GN5", n.d.), but this should just be another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
 
 `im = raw.raw_image_visible.astype(np.float32)`
 
@@ -185,15 +185,15 @@ would result in the network giving an image with a depth of one, but for the Sam
 
 `im = 0.25*im[:,:,0] + 0.25*im[:,:,1] + 0.25*im[:,:,2] + 0.25*im[:,:,3]`
 
-Granted, this does limit the usability of the results, but even with this method, the network does show some promosing results. Given a set of images like the following images:
+Granted, this does limit the usability of the results, but even with this method, the network does show some promising results. Given a set of images like the following images:
 
 ![](./images/samsung_sample.png)
 
-The following images can be optained:
+The following images can be obtained:
 
 ![](./images/samsung_on_samsung.png)
 
-These results are ofcourse part of the images the network is trained upon, but the following results are from a model trained on dataset M1 for instance:
+These results are of course part of the images the network is trained upon, but the following results are from a model trained on dataset M1, for instance:
 
 ![](./images/samsung_on_oneplus.png)
 
@@ -428,15 +428,21 @@ When testing the different hyperparameters and doing the ablation study the over
 Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
 
 ## References <a name="references"></a>
+Chen, C., Chen, Q., Xu, J., & Kotlun, V. (2018). Learning to See in the Dark. *arXiv*, 1805.01934, https://doi.org/10.48550/arXiv.1805.01934
+
 Sony (n.d.). *Quad Bayer Coding*. Retrieved April 27, 2023, from https://www.sony-semicon.com/en/technology/mobile/quad-bayer-coding.html
 
 Canon (n.d.). *Canon EOS 100D*. Retrieved April 27, 2023, from https://www.canon.nl/for_home/product_finder/cameras/digital_slr/eos_100d/ 
 
 Canon (n.d.). *Canon EOS 90D-camera*. Retrieved April 27, 2023, from https://www.canon.nl/cameras/eos-90d/specifications/
 
-Chen, C., Chen, Q., Xu, J., & Kotlun, V. (2018). Learning to See in the Dark. *arXiv*, 1805.01934, https://doi.org/10.48550/arXiv.1805.01934
-
 OnePlus (n.d.). *OnePlus 7*. Retrieved April 27, 2023 from https://www.oneplus.com/nl/7/specs
 
 OnePlus (n.d.). *OnePlus Nord 2 5G*. Retrieved April 27, 2023 from https://www.oneplus.com/nl/nord-2-5g
+
+PhoneArena (2023). *Samsung Galaxy S22 camera*. Retrieved April 27, 2023 from https://www.phonearena.com/news/samsung-galaxy-s22-camera_id136460
+
+Samsung (n.d.). *ISOCELL GN5*. Retrieved April 27, 2023 from https://semiconductor.samsung.com/image-sensor/mobile-image-sensor/isocell-gn5/
+
+Quora (2022). *How does a quad pixel camera work?*. Retrieved April 27, 2023 from https://www.quora.com/How-does-a-quad-pixel-camera-work-My-girlfriends-phone-says-it-has-a-48MP-main-camera-but-it-takes-quad-pixel-12MP-pictures
 
