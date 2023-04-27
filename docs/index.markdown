@@ -177,7 +177,7 @@ To make sure the problem did not have anything to do with the bit depth, we also
 For these images, the exposure ratio again is mostly not between 100 and 300. Therefore, it is likely that the ratio is again the problem. 
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
-The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 (Samsung Galaxy S22 camera, 2023), which uses a Tetrapixel RGB Bayer pattern (ISOCELL GN5, n.d.) to shoot DNG images with a resolution of 4000x3000. It should be noted however that it appears that Tetrapixel is just another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
+The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. According to Anastasovhis (2023), this phone uses a 50MP ISOCELL GN5. Samsung (n.d.) states that this sensor uses a Tetrapixel RGB Bayer pattern (ISOCELL GN5, n.d.). The phone shoots DNG images with a resolution of 4000x3000. It should be noted however that it appears that Tetrapixel is just another terminology for the Quad-Bayer pattern used by all other devices, according to Haynie (2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
 
 `im = raw.raw_image_visible.astype(np.float32)`
 
@@ -193,7 +193,7 @@ The following images can be obtained:
 
 ![](./images/samsung_on_samsung.png)
 
-These results are of course part of the images the network is trained upon, but the following results are from a model trained on dataset M1, for instance:
+These results are of course part of the images the network is trained upon, but the following results are from a model trained on dataset P2, for instance:
 
 ![](./images/samsung_on_oneplus.png)
 
@@ -440,9 +440,8 @@ OnePlus (n.d.). *OnePlus 7*. Retrieved April 27, 2023 from https://www.oneplus.c
 
 OnePlus (n.d.). *OnePlus Nord 2 5G*. Retrieved April 27, 2023 from https://www.oneplus.com/nl/nord-2-5g
 
-PhoneArena (2023). *Samsung Galaxy S22 camera*. Retrieved April 27, 2023 from https://www.phonearena.com/news/samsung-galaxy-s22-camera_id136460
+Anastasov, A. (2023). *Samsung Galaxy S22 camera: Everything you need to know*. PhoneArena. https://www.phonearena.com/news/samsung-galaxy-s22-camera_id136460
 
 Samsung (n.d.). *ISOCELL GN5*. Retrieved April 27, 2023 from https://semiconductor.samsung.com/image-sensor/mobile-image-sensor/isocell-gn5/
 
-Quora (2022). *How does a quad pixel camera work?*. Retrieved April 27, 2023 from https://www.quora.com/How-does-a-quad-pixel-camera-work-My-girlfriends-phone-says-it-has-a-48MP-main-camera-but-it-takes-quad-pixel-12MP-pictures
-
+Haynie, D. (2022). *How does a quad pixel camera work? My girlfriend's phone says it has a 48MP main camera but it takes quad pixel 12MP pictures.*. Quora. https://www.quora.com/How-does-a-quad-pixel-camera-work-My-girlfriends-phone-says-it-has-a-48MP-main-camera-but-it-takes-quad-pixel-12MP-pictures
