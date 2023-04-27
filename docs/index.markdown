@@ -337,23 +337,23 @@ These different learning rate (combinations) will visually be evaluated towards 
 ![](./images/ps_gt&default.png)
 
 #### Minimizing or increasing patch size
-Altering the training patch size seems to effect the coloration of the images the most. In the extreme case of a patch size of 1, very little actual color seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximately 10 times faster than iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
+Altering the training patch size seems to affect the colouration of the images the most. In the extreme case of a patch size of 1, very little actual colour seems to be present. However, even a patch size of 64 shows more red/blue-ish hues compare to larger patch sizes. Note that a patch size of 650 is the largest patch size we could get the script to accept, so the effect of drastically increasing the patch size remains to be explored. Besides the minimal effect on the score, there was a substantial decrease in computation time. Iterations with a patch size of 64 would run approximately 10 times faster than iterations with a patch size of 512. Although both are still (on the system tested upon) fractions of a second, in the long run this could make a significant difference.
 
 ![](./images/ps_singles.png)
 
 #### Randomly selecting patch sizes
-Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are marginally better than most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations with a smaller patch size might be significantly faster.  
+Instead of having a static patch size, another option could be to use multiple patch sizes. We initially tried to explore how the algorithm would handle this, and if it would possibly enhance the end result. None of these experiments score drastically better or worse compared to the other options, but these scores are marginally better than most static patch sizes. This could give a good balance between the pipeline result and computation time, since iterations which contain smaller patch sizes might be significantly faster.  
 
 ![](./images/ps_randoms.png)
 
 ## Ablation study <a name="ablation-study"></a>
-During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original dataset that we talked about in the Method section.
+During the ablation study, we used the original training code (with the changes made to allow it to run) and only changed the network for each experiment. Our ablation study consists of 10 experiments. These experiments mostly existed of removing layers, but for 1 of the experiments we also added layers. The train and test images are the same subset consisting of 10 train and 10 test images from the original dataset that we talked about in the Method section.
 
 ![](./images/OriginalNetwork.png)
 The original network is shown above. As we can see in the image, the network mostly consists of pairs of convolutional layers. These are the layers we targeted in our ablation study. 
 
 ![](./images/AblationNetworks.png)
-In the image above we show the networks for each respective experiment. Experiment 2 is the experiment in which we added layers to the network. We also tried to do another experiment where we added 2 pairs of layers as in the middle of the original network, but this took too long to run. 
+In the image above, we show the networks for each respective experiment. Experiment 2 is the experiment in which we added layers to the network. We also tried to do another experiment where we added 2 pairs of layers as in the middle of the original network, but this took too long to run. 
 
 
 | Ablation | PSNR  | SSIM |
@@ -370,9 +370,9 @@ In the image above we show the networks for each respective experiment. Experime
 | 9        | 30.18 | 0.79 |
 | 10       | 28.20 | 0.39 |
 
-The table above shows the results for all of the experiments that we ran. As we can see in the table the general trend is that the more layers we remove from the network, the more the performance goes down. We will now look a bit more in depth into these results.
+The table above shows the results for all the experiments that we ran. As we can see in the table, the general trend is that the more layers we remove from the network, the more the performance goes down. We will now look a bit more in depth into these results.
 
-The fourth point of note is the performance difference between the experiments. While the performance of the networks goes down as we remove layers, it is not the same for each pair. 
+The fourth point of note is the performance difference between the experiments. While the performance of the networks goes down as we remove layers, it is not the same for each pair.
 
 |             | Difference (PSNR/SSIM) |
 |-------------|------------------------|
@@ -388,12 +388,12 @@ The fourth point of note is the performance difference between the experiments. 
 | 8 - 7       | 0.10/0.05              |
 
 The table above shows the difference in performance between pairs of experiments that correspond to the steps in removing layers. 
-As we can see the difference between the pairs varies a lot. For the pair of experiment 3 and 4 the difference is negligible since the PSNR goes down but thee SSIM goes up. 
+As we can see, the difference between the pairs varies a lot. For the pair of experiment 3 and 4 the difference is negligible since the PSNR goes down but thee SSIM goes up. 
 We can see that the largest difference is between the pair of experiments 6 and 10. This is to be expected, since for experiment 10 the network consists of only 1 layer. 
 
 The second point of note is that for experiment 2, where we added a layer to each pair, the performance is lower than the default. Instead, the performance is similar to the performance of the network in experiment 1. 
 
-The third point of note is that the middle pair of layers, g_conv5_1 and g_conv5_2, improve the performance of the model significantly. We can see this by comparing the performance between sets of experiments where the only difference is whether those two middle layers are there or not. These pairs are:
+The third point of note is that the middle pair of layers, g_conv5_1 and g_conv5_2, improve the performance of the model significantly. We can see this by comparing the performance between sets of experiments, where the only difference is whether those two middle layers are there or not. These pairs are:
 
 | Without/With | Without (PSNR/SSIM) | With (PSNR/SSIM) | Difference (PSNR/SSIM) |
 |--------------|---------------------|------------------|------------------------|
@@ -402,30 +402,30 @@ The third point of note is that the middle pair of layers, g_conv5_1 and g_conv5
 | 5 & 8        | 29.79/0.73          | 30.00/0.78       | 0.21/0.05              |
 | 6 & 7        | 29.53/0.67          | 29.90/0.73       | 0.37/0.06              |
 
-For all of these pairs there is a significant performance increase by adding this pair of layers. When we compare the difference in performance in this table with the difference in performance in the table for the first point of note, we can see that adding these two layers gives a similar and in some cases larger improvement of performance than adding multiple pairs of layers. 
+For all of these pairs, there is a significant performance increase by adding this pair of layers. When we compare the difference in performance in this table with the difference in performance in the table for the first point of note, we can see that adding these two layers gives a similar and in some cases larger improvement of performance than adding multiple pairs of layers. 
 
 The fourth point of note becomes clear when visually inspecting the output the networks created from the test set.
 ![](./images/AblationImagesSmall.png)
-The image above shows the output for the same image for each experiment. While the quality of the images does degrade slightly (e.g. more noise, colours less vivid) as we remove layers, the images overall still look pretty good for every experiment except for experiment 10. For output image of experiment 10 the colours look similar to the one shown. 
+The image above shows the output for the same image for each experiment. While the quality of the images does degrade slightly (more noise, less vivid colours) as we remove layers, the images overall still look pretty good for every experiment except for experiment 10. For the output image of experiment 10, the colours look similar to the one shown. 
 When we ignore experiment 10, experiment 6 and 7 are the experiments that have the least amount of layers. While the image quality is not as good as the for the other experiments, the overall image quality is still relatively high. 
-Lastly we'd like to note a few things with respect to the colours in the images. For experiment 2, the only experiment in which we added extra layers, the colours differ quite a lot from the others. These colours are not as close to the ground truth as some of the other outputs. For experiment 9, where we removed 2 pairs of layers, the colours are actually closer to the ground truth than the default image. The grass is greener and the train track is slightly more blue. 
+Lastly, we'd like to note a few things with respect to the colours in the images. For experiment 2, the only experiment in which we added extra layers, the colours differ quite a lot from the others. These colours are not as close to the ground truth as some of the other outputs. For experiment 9, where we removed 2 pairs of layers, the colours are actually closer to the ground truth than the default image. The grass is greener and the train track is slightly more blue. 
 
-So, in this ablation study we have shown that while all layers of the network are important for creating output, the gain per added layer is not large. However, it is important to note that these results are achieved by training the networks on only 10 images. It is definitely possible that there would be larger differences when training on the entire train set. 
+So, in this ablation study we have shown that while all layers of the network are important for creating output, the gain per added layer is not large. However, it is important to note that these results are achieved by training the networks on only 10 images. It is definitely possible that there would be larger differences when training on a larger or the entire train set. 
 
-Note: If you are doing an ablation study, make sure that the network in the test file is the same as the one from the train file. Otherwise the model will only give a black image as output. 
+Note: If you are doing an ablation study, make sure that the network in the test file is the same as the one from the train file. Otherwise, the model will only give a black image as output. 
 
-One discussion point we wanted to address outside of the experiments we ran is the metrics used to determine image quality. SSIM is a measure of structural similarity on the grayscale of the images. This means that PSNR is the only value judging the colours of the images. However, it seems like a bad metric. The PSNR mentioned in the paper for their default run on Sony is 28.88. We found across all of our experiments that the PSNR of seemingly terrible results was comparable or even better than the PSNR mentioned as the default in the paper. An example is the amplification being hardcoded to 1 experiment. Here the PSNR was 28.75, which is comparable to the value in the paper. Even though, as shown earlier, the colour quality of those output images should have scored really low.
+One discussion point we wanted to address outside the experiments we ran is the metrics used to determine image quality. SSIM is a measure of structural similarity on greyscale images. This means that PSNR is the only value judging the colours of the images. However, it seems like a poor metric. The PSNR score mentioned in the paper for their default run on Sony is 28.88. We found across all of our experiments that the PSNR of seemingly terrible results was comparable or even better than the PSNR mentioned as the default in the paper. An example is the amplification being hardcoded to 1 for an experiment. Here, the PSNR score was 28.75, which is comparable to the value in the paper. Even though, as shown earlier, the colour quality of those output images should have scored really low.
 
-This discrepency could have many reasons. This could, for example, be due to the fact that they have more images in their test and train set and that this would make the overall average lower. However, if the average of output images was equal to the images in the amplification = 1 set we would argue that is not a very good result. Another reasoning is that the average is overall sensitive to outliers, and maybe there were just some outliers in their output. On one hand the outliers would have been interesting to know about, but on the other hand possibly using the mean of the PSNR and SSIM would have been a better measure to combat this issue. Finally, the PSNR could just also be a bad metric to determine image quality. Since it is then the only judge of the colour quality of an image, a different metric should have been chosen. 
+This discrepancy could have many reasons. This could, for example, be due to the fact that they have more images in their test and train set and that this would make the overall average lower. However, if the average of output images was equal to the images in the amplification = 1 set, we would argue that is not a very good result. Another reasoning is that the average is overall sensitive to outliers, and maybe there were just some outliers in their output. On one hand the outliers would have been interesting to know about, but on the other hand possibly using the mean of the PSNR and SSIM would have been a better measure to combat this issue. Finally, the PSNR could just also be a bad metric to determine image quality. Since it is then the only judge of the colour quality of an image, a different metric should have been chosen. 
 
-Whatever caused this oddity, it cannot be determined since it was not shared how the SSIM and PSNR were determined. This might stand to reason since these are standardised values. However, it would have been still been helpful in determining what caused this seemingly odd scoring.
+Whatever caused this oddity, it cannot be determined since it was not shared how the SSIM and PSNR were determined. This might stand to reason, since these are standardised values. However, it would have been still been helpful in determining what caused this seemingly odd scoring.
 
 ## Conclusions and Final remarks <a name="conclusions-and-final-remarks"></a>
-When creating new datasets to use on the network, the environment for creating datasets needs to be strictly defined. It needs to be paid special attention to that the camera does not move in between taking a long and short image of the scene, the ratio of the exposure time needs to be a difference of at least 100 for the network to produce viable results, and only then can the ISO be varied. Furthermore, the creation of the datasets showed that the network is indeed not generalisable to other sensors once trained. However, how different bit depths and device qualities play into this could not be determined due to challenges while making the datasets. Finally, when choosing the device it needs to be tested if the Bayer filter and RAW output is easily translatable to the network, since this is often not very clearly defined between brands and not always the same for the network.
+When creating new datasets to use on the network, the environment for creating datasets needs to be strictly defined. Special attention should be taken for assuring that the camera does not move while taking long and short images of the scene, the ratio of the exposure time needs to be a difference of at least 100 for the network to produce viable results, and only then can the ISO be varied. Furthermore, the creation of the datasets showed that the network is indeed not generalisable to other sensors once trained. However, how different bit depths and device qualities play into this could not be determined due to challenges while making the datasets. Finally, when choosing the device it needs to be tested if the Bayer filter and RAW output is easily translatable to the network, since this is often not very clearly defined between brands and not always the same for the network.
 
-When testing the different hyperparameters and doing the ablation study the overall conclusion is that the hyperparameters and network were very well tuned. Although it also showed that the network is not very robust, since any change degraded the output quality.
+When testing the different hyperparameters and doing the ablation study, the overall conclusion is that the hyperparameters and network were very well tuned. Although, it also showed that the network is not very robust, since any change degraded the output quality.
 
-Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
+Overall, the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way, rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
 
 ## References <a name="references"></a>
 Chen, C., Chen, Q., Xu, J., & Kotlun, V. (2018). Learning to See in the Dark. *arXiv*, 1805.01934, https://doi.org/10.48550/arXiv.1805.01934
