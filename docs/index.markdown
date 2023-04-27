@@ -24,8 +24,7 @@ If the files are no longer available, please contact one of us at the e-mail add
 7. [Hyperparams check](#hyperparams-check)
 8. [Ablation study](#ablation-study)
 9. [Conclusions and final remarks](#conclusions-and-final-remarks)
-10. [Authors](#authors)
-11. [References](#references)
+10. [References](#references)
 
 
 ## Introduction <a name="introduction"></a>
