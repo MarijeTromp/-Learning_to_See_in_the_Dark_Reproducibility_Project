@@ -261,11 +261,11 @@ The results in PSNR and SSIM can be seen in the table below. This mostly confirm
 |   random  |	29.05   |	0.72    |
 
 ### Epochs
-Epochs is another hyperparameter that could be varied in the code. During the first couple times training the network we noticed that it already showed relatively good results at epoch 500 (the first training checkpoint in the code). So, we wanted to test an extremely low amount of epochs to see if this also already had good results. This is why we selected `epoch = 10`. Next, we wanted to test at the first checkpoint, `epoch = 500`. The default is 4000. To try and see if we could get the network to overtrain we also tried `epoch = 8000`.
+The amount of epochs is another hyperparameter that could be varied in the code. During the first couple times training the network, we noticed that it already showed relatively good results at epoch 500 (the first training checkpoint in the code). So, we wanted to test an extremely low amount of epochs to see if this also already had good results. This is why we selected `epoch = 10`. Next, we wanted to test at the first checkpoint, `epoch = 500`. The default is 4000. To try and see if we could get the network to overtrain, we also tried `epoch = 8000`.
   
 ![epoch_results](./images/epoch_results.png)
 
-What can be seen in the results is that at epoch 10 you can already clearly make out what the object in the image is. For so little epochs this was a surprising result. At epoch 500 the colours are starting to be defined and the image is a bit sharper. The default is epoch 4000. Here it is hard to find differences between the ground truth and the output. Epoch 8000 seems comparable. These findings are also largely supported in the PSNR and SSIM results shown in the table below. One thing that wasn't immediately clear is that the quality at epoch 8000 seems slightly less than at 4000. 
+What can be seen in the results is that at epoch 10 you can already clearly make out what the object in the image is. For such few epochs, this was a surprising result. At epoch 500 the colours are starting to be defined, and the image is a bit sharper. The default is epoch 4000. Here it is hard to find differences between the ground truth and the output. Epoch 8000 seems comparable. These findings are also largely supported in the PSNR and SSIM results shown in the table below. One thing that wasn't immediately clear is that the quality at epoch 8000 seems slightly less than at 4000. 
   
 |   Epochs  |	PSNR    |	SSIM    |
 |-----------|---------|---------|
@@ -295,26 +295,26 @@ These different learning rate (combinations) will visually be evaluated towards 
 ![](./images/lr_bike_gt&default.png)
 
 #### Increasing the learning rate
-Increasing the learning rate would intuitively result in faster learning, with the added risk that the steps taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resemblance of a bike can be detected, but this is not a desirable result.
+Increasing the learning rate would intuitively result in faster learning, with the added risk that the steps taken are too large for the problem to converge to some minimum. The following bike image is retrieved from a model solely trained with a learning rate of 1e-3. Some resemblance to a bike can be detected, but this is not a desirable result.
 
 ![](./images/lr_bike_1e-3.png)
 
 #### Decreasing the learning rate
-Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the steps taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7. These images show that decreasing the learning rate directly impacts the amount of time necessary to get visible images, with the images getting more blurry and more dark for a decreasing learning rate.
+Decreasing the learning rate would intuitively result in more stable and smooth learning, with the added risk that the steps taken are too small for the problem to converge in a reasonable amount of time. The following bike images are retrieved from models trained with learning rates of 1e-4, 1e-5, 1e-6 and 1e-7, respectively. These images show that decreasing the learning rate directly impacts the amount of time necessary to get brightened images, with the images getting more blurry and more dark for a decreasing learning rate.
 
 ![](./images/lr_bike_1e-4&1e-5&1e-6&1e-7.png)
 
 #### Combination of 1e-3 and 1e-4
-Combining the highest learning rate with the best single learning rate, we wanted to experiment if it is possible for the algorithm to go from the psychedelic images from the higher learning rate to something that more resembles the ground truth. We started out with the higher learning rate for both 1000 epochs, 500 epochs and 100 epoch. For the former two, it was not successful into getting the loss below 1, and the images remained very colourful. For the 100 epochs variant, however, the results are actually very muted. This shows 2 interesting things however: 1) An overly colourful and saturated image can eventually be transformed to something more conform the ground truth, and 2) there are artifacts present from this more colourful past. Notice that for example the yellow bike has a certain glow that none of the presented images thus far have.
+Combining the highest learning rate with the best single learning rate, we wanted to experiment if it is possible for the algorithm to go from the psychedelic images corresponding to the higher learning rate to something that more resembles the ground truth. We started out with the higher learning rate for both 1000 epochs, 500 epochs and 100 epochs. For the former two, it was not successful into getting the loss below 1, and the images remained very colourful. For the 100 epochs variant, however, the results are more sensible. This shows two interesting aspects, however: 1) An overly colourful and saturated image can eventually be transformed to something more conform to the ground truth, and 2) there are still artefacts present from this more colourful past. Notice that, for example, the yellow bike has a certain glow that none of the presented images thus far have.
 
 ![](./images/lr_bike_1e-3&1e-4.png)
 
 #### Combination of 1e-3, 1e-4, 1e-5 and 1e-6
-Solely out of curiosity, we decided to see what would happen with four learning rates: the one that is too radical, and the three learning rates which are all reasonable. This gave the following result. This hearkens back tot the combination of 1e-3 and 1e-4, but with more detail, be it also psychedelically styled.
+Solely out of curiosity, we decided to see what would happen when using four learning rates: 1e-3, 1e-4, 1e-5 and 1e-6. These are all equally distributed, so each one is used for 1000 epochs. This also uses the larger learning rate size of 1e-3, which makes it likely for the images to be colourful. Using this gave the following result. This hearkens back tot the combination of 1e-3 and 1e-4, but with more detail, be it still psychedelically styled.
 
 ![](./images/lr_quad_combi.png)
 
-From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only marginally better here. Intuitively it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
+From this investigation, we can see why the paper chose to combine the learning rates of 1e-4 and 1e-5, since this is almost the best scoring option from this investigation as well. The only option which scores better is the sole use of a learning rate of 1e-4, which is only marginally better here. Intuitively, it could make sense to have a more direct and a more nuanced learning rate, so not solely using one learning rate could make sense in that regard.
 
 ### Patch size
 For the learning rate, we wanted to find out why the specific patch size was chosen. In the default version, a patch size of 512x512 is chosen to train on. To inspect the effect of the size, we try different patch sizer or different combinations there of. The following patch sizes are used, with the corresponding PSNR and SSIM scores:
