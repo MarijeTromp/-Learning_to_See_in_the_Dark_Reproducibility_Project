@@ -428,8 +428,10 @@ When testing the different hyperparameters and doing the ablation study the over
 Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
 
 ## References <a name="references"></a>
+```
 Canon (n.d.). __Canon EOS 100D__. Retrieved April 27, 2023, from https://www.canon.nl/for_home/product_finder/cameras/digital_slr/eos_100d/ 
 Canon (n.d.). __Canon EOS 90D-camera__. Retrieved April 27, 2023, from https://www.canon.nl/cameras/eos-90d/specifications/
 Chen, C., Chen, Q., Xu, J., & Kotlun, V. (2018). Learning to See in the Dark. __arXiv__, 1805.01934, https://doi.org/10.48550/arXiv.1805.01934
 OnePlus (n.d.). __OnePlus 7__. Retrieved April 27, 2023 from https://www.oneplus.com/nl/7/specs
 OnePlus (n.d.). __OnePlus Nord 2 5G__. Retrieved April 27, 2023 from https://www.oneplus.com/nl/nord-2-5g
+```
