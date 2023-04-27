@@ -34,7 +34,7 @@ It can be pondered on why one would possibly want this capability. Besides the a
 
 The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the paper.
 
-## Paper summary <a name=paper"></a>
+## Paper summary <a name="paper"></a>
 This paper entailed two major contributions: the See-in-the-Dark (SID) dataset and a pipeline to brighten images with very little to no light present.
 
 The SID dataset consists of images from two cameras: the Sony alpha-7S II and the Fujifilm X-T2. These images come in sets. The ground truth image, sometimes also referred to as the long image, is an image with a high exposure time, which brightens the image in a non-artificial way. This image is paired with one or multiple short exposure time images, also referred to as the short or input image, which the network will try and learn how to transform to the ground truth images. All these images are provided in the RAW format of their respective brands. This means it is raw sensor data compared to a compressed PNG or JPEG. This format is used since it contains the most amount of direct information from the scene. The dataset was created since the authors noted that at the time of writing there was no dataset available with truly dark images such as the ones in the SID dataset.
