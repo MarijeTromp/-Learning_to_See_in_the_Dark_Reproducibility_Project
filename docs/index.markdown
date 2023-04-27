@@ -23,7 +23,7 @@ In this project, we tried to reproduce the results of the Learning to See in the
 
 It can be pondered on why one would possibly want this capability. Besides the angle of it being scientifically interesting to explore, another angle could be to smarten the software we use, instead of blindly upgrading our hardware. Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can upgrade our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware alterations, upgrading the software could definitely extend the applications of these hardware components.
 
-The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the project.
+The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the paper.
 
 ## Paper summary <a name="paper"></a>
 This paper entailed two major contributions: the See-in-the-Dark (SID) dataset and a pipeline to brighten images with very little to no light present.
