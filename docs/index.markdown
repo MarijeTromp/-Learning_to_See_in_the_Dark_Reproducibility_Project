@@ -177,7 +177,7 @@ To make sure the problem did not have anything to do with the bit depth, we also
 For these images, the exposure ratio again is mostly not between 100 and 300. Therefore, it is likely that the ratio is again the problem. 
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
-The sensor for the Sony camera is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 ("Samsung Galaxy S22 camera", 2023), which uses a Tetrapixel RGB Bayer pattern ("ISOCELL GN5", n.d.), but this should just be another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
+The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 ("Samsung Galaxy S22 camera", 2023), which uses a Tetrapixel RGB Bayer pattern ("ISOCELL GN5", n.d.) to shoot DNG images with a resolution of 4000x3000. It should be noted however that it appears that Tetrapixel is just another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
 
 `im = raw.raw_image_visible.astype(np.float32)`
 
