@@ -4,6 +4,16 @@
 title: ""
 layout: page
 ---
+## Authors <a name="authors"></a>
+#### Group 5
+Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams check<br>
+Floor Joosen (4814495) f.e.joosen@student.tudelft.nl: New data, Hyperparams check<br>
+Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
+
+#### Data
+The images used can be found here: https://drive.google.com/drive/folders/1-WvhaLVh7EzWN6PMxix_heBFjCvESS6h?usp=sharing.
+If the files are no longer available, please contact one of us at the e-mail addresses above. 
+
 ## Index
 1. [Introduction](#introduction)
 2. [Paper summary](#paper)
@@ -417,16 +427,6 @@ When creating new datasets to use on the network, the environment for creating d
 When testing the different hyperparameters and doing the ablation study the overall conclusion is that the hyperparameters and network were very well tuned. Although it also showed that the network is not very robust, since any change degraded the output quality.
 
 Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
-
-## Authors <a name="authors"></a>
-#### Group 5
-Remco Huijsen (5650844) r.huijsen@student.tudelft.nl: New data, Hyperparams check<br>
-Floor Joosen (4814495) f.e.joosen@student.tudelft.nl: New data, Hyperparams check<br>
-Marije Tromp (4933656) m.r.tromp@student.tudelft.nl: New data, Ablation study<br>
-
-#### Data
-The images used can be found here: https://drive.google.com/drive/folders/1-WvhaLVh7EzWN6PMxix_heBFjCvESS6h?usp=sharing.
-If the files are no longer available, please contact one of us at the e-mail addresses above. 
 
 ## References <a name="references"></a>
 Canon (n.d.). __Canon EOS 100D__. Retrieved April 27, 2023, from https://www.canon.nl/for_home/product_finder/cameras/digital_slr/eos_100d/ 
