@@ -193,7 +193,7 @@ The following images can be obtained:
 
 ![](./images/samsung_on_samsung.png)
 
-These results are of course part of the images the network is trained upon, but the following results are from a model trained on dataset P2, for instance:
+These results are of course part of the images the network is trained upon, but the following results are from a model trained on dataset P1, for instance:
 
 ![](./images/samsung_on_oneplus.png)
 
