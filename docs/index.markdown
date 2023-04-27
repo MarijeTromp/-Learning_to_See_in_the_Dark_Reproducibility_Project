@@ -160,7 +160,7 @@ This did impact the results of this dataset, as the images are relatively good, 
 
 ![P1_dataset_results](./images/F1_dataset_results.png)
 
-These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
+These results lead us to believe the network can be well utilised also for phone cameras, as long as a good dataset can be made.
   
 ### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
 On the OnePlus website (n.d.) it states that the OnePlus 7 has a Sony IMX 586 camera sensor. We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
