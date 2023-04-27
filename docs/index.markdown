@@ -181,7 +181,7 @@ The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While 
 
 `im = raw.raw_image_visible.astype(np.float32)`
 
-would result in the network giving an image with a depth of one, but for the Samsung Galaxy S22 pictures it gave images with a depth of four. To make this images usable, we took the average of the four layers as follows:
+would result in the network giving an image with a depth of one, but for the Samsung Galaxy S22 pictures it gave images with a depth of four. To make these images usable, we took the average of the four layers as follows:
 
 `im = 0.25*im[:,:,0] + 0.25*im[:,:,1] + 0.25*im[:,:,2] + 0.25*im[:,:,3]`
 
