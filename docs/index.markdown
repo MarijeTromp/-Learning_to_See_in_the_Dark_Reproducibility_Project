@@ -47,13 +47,13 @@ The Learning to See in the Dark pipeline directly uses these RAW format images f
 |   Fujifilm X-T2    |   26.61   |	 0.68    |
 
 ## Main project goals <a name="goals"></a>
-In this blog post we will showcase the reproduction that we performed of the paper. After reading the paper we formulated a set of goals.
+In this blog post, we will showcase our reproduction results of the paper. After reading the paper, we formulated a set of goals.
 
-First of, in the paper the authors mention that if the network is trained for one sensor, that it will probably not generalise well to other sensors. As a first goal we therefore set out to test this theory by creating more datasets. The authors mentioned that the network would probably also perform worse on lower bit depth camera's such as those on phone camera's. We therefore also wanted to vary the devices we used to create the datasets. This would then serve the purpose of being able to judge the generalisation power of the network, and determine if it would indeed perform worse for lower bit depth camera's. Finally, we wanted to see whether or not generalisaton would work better for similar bit depth and quality devices rather than from a phone camera to a professional camera.
+Firstly, in the paper the authors mention that if the network is trained for one specific camera sensor, this means that it will probably not generalise well to other sensors. As a first goal, we therefore set out to test this theory by creating more datasets. The authors mentioned that the network would probably also perform worse on lower bit depth cameras, such as those on smartphones. We therefore also wanted to vary the devices we used to create these datasets. This would then serve the purpose of being able to judge the generalisation power of the network, and determine if it would indeed perform worse for lower bit depth cameras. Finally, we wanted to see whether generalisation would perform better for devices with a similar bit depth and camera quality, in comparison to going from a smartphone camera to a professional camera.
 
-The second goal was to test how well the network was tuned and how sensitive it is to changes. For this purpose we wanted to perform a hyperparameter check on different hyperparameters in the network.
+The second goal was to test how well the network was tuned and how sensitive it is to changes. For this purpose, we wanted to perform a hyperparameter check on different hyperparameters in the network. This way, we can compare the output images and see how these deviate for alterations of the hyperparameter values.
 
-Finally, we wanted to test the robustness of the pipeline, and explore the functionality of its layers. For this purpose an ablation study was performed.
+Finally, we wanted to test the robustness of the pipeline, and explore the functionality of its layers. For this purpose, an ablation study was performed.
 
 ## Value of a reproduction <a name= "value-of-a-reproduction"></a>
 Doing a reproduction project is important for many different reasons. First of all, in science it is important to stay sceptical. If a paper has never been reproduced, it is not possible to know if the findings are actually valid or not. It is possible that the original authors made some mistake, or that they cherry-picked the results. By reproducing the results of a paper, we can try and see if the results are accurate or not. 
