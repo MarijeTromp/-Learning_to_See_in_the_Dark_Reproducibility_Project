@@ -30,7 +30,7 @@ If the files are no longer available, please contact one of us at the e-mail add
 ## Introduction <a name="introduction"></a>
 In this project, we tried to reproduce the results of the Learning to See in the Dark (Chen et al., 2018) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at the Delft University of Technology. This paper tries to brighten low-light or seemingly black images such that details of the environment can be uncovered.
 
-It can be pondered on why one would possibly want this capability. Besides the angle of it being scientifically interesting to explore, another angle could be to smarten the software we use, instead of blindly upgrading our hardware. Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can upgrade our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware alterations, upgrading the software could definitely extend the applications of these hardware components.
+It can be pondered on why one would possibly want this capability. Besides the angle of it being scientifically interesting to explore, another angle could be to smarten the software we use, instead of blindly upgrading our hardware ("Quad Bayer Coding", n.d.). Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can upgrade our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware alterations, upgrading the software could definitely extend the applications of these hardware components.
 
 The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the paper.
 
@@ -428,6 +428,8 @@ When testing the different hyperparameters and doing the ablation study the over
 Overall the paper presented its work very well. Some details, such as to make sure the exposure times varied enough, could have been highlighted a little more. It would have also been good to discuss how the PSNR and SSIM values were achieved, so that we could make sure we did it the same way rather than having to speculate about the perceived oddities. However, the network itself performed very well, and is definitely a good tool to enhance extremely low light images.
 
 ## References <a name="references"></a>
+Sony (n.d.). *Quad Bayer Coding*. Retrieved April 27, 2023, from https://www.sony-semicon.com/en/technology/mobile/quad-bayer-coding.html
+
 Canon (n.d.). *Canon EOS 100D*. Retrieved April 27, 2023, from https://www.canon.nl/for_home/product_finder/cameras/digital_slr/eos_100d/ 
 
 Canon (n.d.). *Canon EOS 90D-camera*. Retrieved April 27, 2023, from https://www.canon.nl/cameras/eos-90d/specifications/
