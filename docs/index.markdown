@@ -150,7 +150,7 @@ Finally, as with the other datasets, it was challenging not to move the camera w
 ![C2_dataset](./images/F2_dataset.png)
   
 ### Making of Dataset P1 <a name="making-of-dataset-p1"></a>
-Dataset P1 was created using the main camera of the OnePlus Nord 2. This camera has a Sony IMX766 sensor that can shoot 50 MP images with bit-depth of 10 in DNG format. DNG is an open source version of the RAW format. The sensor has a Quad Bayer filter and a max ISO of 6400.
+Dataset P1 was created using the main camera of the OnePlus Nord 2. According to the website of OnePlus (n.d.), this camera has a Sony IMX766 sensor that can shoot 50 MP images with bit-depth of 10 in DNG format. DNG is an open source version of the RAW format. The sensor has a Quad Bayer filter and a max ISO of 6400.
   
 One challenge is that no stand or other tool was available to hold the phone in place while taking pictures. This is why the phone was positioned on top of the surface of an object to try and mitigate movement while taking pictures. This method stopped the phone from moving up, down, left and right during the making of the images. However, it did not stop the angle of the phone from moving or being tilted. This resulted in the long and short images still varying in relation to one another. This variation was seen when training the model on this dataset, because double lines started appearing in the output images, which can for example especially be seen in this result from the training at epoch 4000. On the left is the ground truth patch taken for training, and on the right is the same patch as output.
 
@@ -163,7 +163,7 @@ This did impact the results of this dataset, as the images are relatively good, 
 These results lead us to believe the network can be well utilised also for phone camera's, as long as a good dataset can be made.
   
 ### Making of Dataset P2 <a name="making-of-dataset-p2"></a>
-The OnePlus 7 has a Sony IMX 586 camera sensor ("OnePlus 7", n.d.). We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
+On the OnePlus website (n.d.) it states that the OnePlus 7 has a Sony IMX 586 camera sensor. We were not able to find the bit-depth for this camera, and therefore have assumed it was 10. The results for these images were on par as for the Canon 90d. 
 When the ISO is set manually, the maximum is 3200. However, when it is automatic the maximum is 6400. Therefore, we kept the ISO on automatic and only changed the exposure between shots. However, this caused the ratio to not be within the correct range. 
 
 ![](./images/OnePlus7_1.png)
@@ -177,7 +177,7 @@ To make sure the problem did not have anything to do with the bit depth, we also
 For these images, the exposure ratio again is mostly not between 100 and 300. Therefore, it is likely that the ratio is again the problem. 
 
 ### Making of Dataset P3 <a name="making-of-dataset-p3"></a>
-The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 ("Samsung Galaxy S22 camera", 2023), which uses a Tetrapixel RGB Bayer pattern ("ISOCELL GN5", n.d.) to shoot DNG images with a resolution of 4000x3000. It should be noted however that it appears that Tetrapixel is just another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
+The sensor for the Sony camera in the paper is a full-frame Bayer sensor. While all other devices complied with this, we found out that the mobile phone for this section, the Samsung Galaxy S22, did not. This phone uses a 50MP ISOCELL GN5 (Samsung Galaxy S22 camera, 2023), which uses a Tetrapixel RGB Bayer pattern (ISOCELL GN5, n.d.) to shoot DNG images with a resolution of 4000x3000. It should be noted however that it appears that Tetrapixel is just another terminology for the Quad-Bayer pattern used by all other devices ("How does a quad pixel camera work?", 2022). However, we did not manage to get it working with the provided Sony pipeline. Normally, using the following line:
 
 `im = raw.raw_image_visible.astype(np.float32)`
 
