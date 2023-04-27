@@ -217,16 +217,16 @@ The generalisation performing better or worse dependent on the device types cann
 ![](./images/new_data_results.png)
 
 ## Hyperparams check <a name="hyperparams-check"></a>
-In this section we discuss the results of the hyperparameters we have tested.
+In this section, we discuss the results of the hyperparameters we have tested.
 
 ### Amplification
-One interesting hyperparameter we found in the paper was the amplification. In the paper it was mentioned that this needed to be manually determined, but that they defined it as the ratio between the exposure time of the ground truth image (long), and that of the input image (short). In the code we found that a maximum was also defined at 300. 
+One interesting hyperparameter we found in the paper was the amplification. In the paper it was mentioned that this needed to be manually determined, but that they defined it as the ratio between the exposure time of the ground truth image (long), and that of the input image (short). In the code, we found that a maximum was also defined at 300. 
   
   `ratio = min(gt_exposure / in_exposure, 300)`
   
-This ratio is then factored with the values in the image after subtracting the black levels. This magnifies the values making it closer to what is expected in the ground truth which had a longer exposure time. With the way the SID dataset was created, the ratio was always either 100, 250 or 300. 
+This ratio is then factored with the values in the image after subtracting the black levels. This magnifies the values, making it closer to what is expected in the ground truth, which had a longer exposure time. With the way the SID dataset was created, the ratio was always either 100, 250 or 300. 
 
-First we wondered what would happen if we removed the ratio altogether. We did this by hardcoding ratio to be 1. The expectation would be that the image would be much darker. This happened in the most part, as the images were mostly black and white. Something that we did not expect is that the images also had seemingly random applications of bright red and yellow colours. The red seemed to mostly organise in blotches, while the yellow seemed to create borders.
+First, we wondered what would happen if we removed the ratio altogether. We did this by hardcoding the ratio to be 1. The expectation would be that the image would be much darker. This happened for the most part, as the images were mostly black and white. Something that we did not expect, however, is that the images also had seemingly random applications of bright red and yellow colours. The red seemed to mostly organise in blotches, while the yellow seemed to create borders.
   
   ![amp_1_results](./images/amp_1_results.png)
 
@@ -236,17 +236,17 @@ One hypothesis for the red colouring is that it overtrained on one image of the 
 
 One thing that obviously was clear is that the amplification was a very important hyperparameter for training the network.
   
-Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly support this, except for that the outlining that occurred in yellow for ratio = 1 seemed to also occur but than in the 'correct' colour.
+Next we wanted to know if it mattered what value it was, as long as it was either 100, 250 or 300. The expectation was that it would not matter for the images. The result mostly supports this, except for that the outlining that occurred in yellow for ratio = 1 seemed to also occur, but then in the 'correct' colour.
   
    ![amp_hardcoded_results](./images/amp_hardcoded_results.png)
 
 So it seems that it is still important to dynamically decide the ratio, rather than hardcoding it to be one value.
   
-Next we wanted to see what would happen if the maximum of the ratio was taken away. However, nothing interesting happened in this case, since it dynamically seemed to only go up to 300. Instead we hardcoded the ratio again to be double the current maximum, 600. We wondered if this would make the images brighter. As can be seen above, it did not change the results much from the other hardcoded values.
+Next, we wanted to see what would happen if the maximum of the ratio was taken away. However, nothing interesting happened in this case, since it dynamically seemed to only go up to 300. Instead, we hardcoded the ratio again to be double the current maximum, 600. We wondered if this would make the images brighter. As can be seen above, it did not change the results much from the other hardcoded values.
   
 Finally, we also trained and tested on a randomized ratio as a baseline for the results.  
   
-The results in PSNR and SSIM can be seen in the table below. This mostly confirms what was already visible in the images above. The default way of dynamically setting the ratio to the ratio between the exposure time of the ground truth and input image is the best method. Hardcoding values made the results worse, but none of the hardcoded values differed much from each other. Not having a maximum seemed to perform worse, but since it came down to the default method this might have been random chance from the patch size training. Randomizing did about as well as hardcoding the ratio.
+The results in PSNR and SSIM can be seen in the table below. This mostly confirms what was already visible in the images above. The default way of dynamically setting the ratio to the ratio between the exposure time of the ground truth and input image is the best method. Hardcoding values made the results worse, but none of the hardcoded values differed much from each other. Not having a maximum seemed to perform worse, but since it came down to the default method, this might have been random chance from the patch size training. Randomizing did about as well as hardcoding the ratio.
   
   
 |   Ratio   |	PSNR    |	SSIM    |
