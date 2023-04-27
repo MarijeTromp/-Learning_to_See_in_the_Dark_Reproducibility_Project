@@ -85,7 +85,7 @@ Here we made the distinction between smartphone cameras and dedicated cameras. T
 |-----------------------|--------------|-----------|---------------|-------------|
 | OnePlus Nord 2		| Sony         | 10        | Quad          | 4096 x 3072 |
 | OnePlus 7				| Sony         | 10        | Quad          | 4000 x 3000 |
-| Samsung Galaxy s22	| ISOCELL      | 12        | Tetrapixel    | 4000 x 3000 |
+| Samsung Galaxy S22	| ISOCELL      | 12        | Tetrapixel    | 4000 x 3000 |
 | Canon 90D				| Canon        | 14        | Quad          | 6984 x 4660 |
 | Canon EOS 100D		| Canon        | 14        | Quad          | 5208 x 3476 |
 
