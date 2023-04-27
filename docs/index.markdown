@@ -19,9 +19,9 @@ layout: page
 
 
 ## Introduction <a name="introduction"></a>
-In this project we tried to reproduce the results of the Learning to See in the Dark (Chen et al., 2018) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at Delft University of Technology. This paper tries to brighten low-light or seemingly black images such that details of the environment can actually be uncovered. 
+In this project, we tried to reproduce the results of the Learning to See in the Dark (Chen et al., 2018) paper as part of the Reproducibility Project for the CS4240 Deep Learning (2022/23 Q3) course at the Delft University of Technology. This paper tries to brighten low-light or seemingly black images such that details of the environment can be uncovered.
 
-It can be pondered on why one would possibly want this capability. Besides the angle of it being scientifically interesting to explore, another angle could be to smarten the software we use, instead of always blindly upgrading our hardware. Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can upgrade our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware, upgrading the software could definitely extend the applications of these hardware components. 
+It can be pondered on why one would possibly want this capability. Besides the angle of it being scientifically interesting to explore, another angle could be to smarten the software we use, instead of blindly upgrading our hardware. Instead of trying different Bayer-patterns to possibly shoot lighter images in the dark, for instance, we could also deepen our understanding of the currently available hardware and how we can upgrade our software to get the most benefits out of it. While there might naturally be limitations, although these would also extend to hardware alterations, upgrading the software could definitely extend the applications of these hardware components.
 
 The results the paper presents are definitely promising, so it definitely signals a possible path forward. For this blog post, we show and discuss our finding regarding the reproduction of the project.
 
